@@ -1,6 +1,18 @@
 
-.row {
-  width: 100%;
+.login {
+  width: 95% !important; 
+}
+.formButton {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  /*background-color: rgb(31, 33, 46) !important;*/
+  background-color: #090a0c !important;
+}
+.g-signin2 {
+  margin-left: 35%;
+  margin-right: 60%;
+  width: 250px !important;
 }
 
 .materialize-red {
@@ -34,6 +46,7 @@ body {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: 100% !important;
 }
 
 
