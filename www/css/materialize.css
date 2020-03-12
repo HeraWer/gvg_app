@@ -44,9 +44,9 @@ body {
 
 .card {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100% !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+  width: auto !important;
 }
 
 

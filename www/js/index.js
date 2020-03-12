@@ -1,4 +1,8 @@
-var email,password,
+$(document).ready(function () {
+    $("#btnLogin").click(logIn)
+});
+
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -26,7 +30,9 @@ var app = {
 
         console.log('Received Event: ' + id);
     }
-};
+
+}
+/*
 function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -34,17 +40,15 @@ function onSignIn(googleUser) {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }
+*/
 
-  $("#btnLogin").click(function(){
-    email = $("#email").val();
-    password = $("#password").val();
-    comsole.log(email, pass);
 
-    logIn();
-  });
 
-  function logIn (username,password){
-      console.log("Log In");
+  function logIn (){
+    console.log("entra function login jquery");
+    email = $("#inputEmail").val();
+    password = $("#inputPass").val();
+    console.log(email, pass);
     const request = require("request-promise"),
     //RUTA = "https://app-intercruises.herokuapp.com/login";
     RUTA = "http://localhost:3000/login"

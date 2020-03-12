@@ -4,26 +4,40 @@
        <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <meta name="google-signin-client_id" content="266474974313-0lhln6mpr8ou3m6q1ovb08ts1u7bnkm9.apps.googleusercontent.com">
+    <script src="js/index.js" async defer></script>
+    <!--<meta name="google-signin-client_id" content="266474974313-0lhln6mpr8ou3m6q1ovb08ts1u7bnkm9.apps.googleusercontent.com">-->
 
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+            
         <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
+		<link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
+		<style>
+		/* For avoiding title truncation in wp8 */
+		.ui-header .ui-title {
+				overflow: visible !important;
+		}
+		/* For fixing the absolute position issue for the default cordova gen page*/
+		#cjp-accordion1 .app {
+				left: 5px !important;
+				margin: 5px !important;
+				position: relative !important;
+		}
+		</style>
       <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>InterCruises</title>
     </head>
     <body ng-app="mainModule" ng-controller="mainController">
       <img src="img/intercruises.png" id="logo">
         <div id="login-page">
             <div class="col s12 z-depth-6 card-panel card">
-              <form class="col s12" action="auth" method="POST">
+              <form class="col s12">
 
                 <div class="row">
                   <div class="input-field col s6 login">
@@ -34,27 +48,19 @@
 
                   <div class="row">
                     <div class="input-field col s6 login">
-                      <input id="password" type="password" class="validate">
-                      <label for="password">Password</label>
+                      <input id="inputPass" type="password" class="validate">
+                      <label for="password">Password</label> 
                     </div>
                   </div>
                     <div class="row">
-                    <button id="btnLogin" class="formButton btn waves-effect waves-light" type="submit" name="action">Login
+                    <button id="inputEmail" class="formButton btn waves-effect waves-light">Login
                       <i class="material-icons right"></i>
                     </button>
-                    </div>
-                    <div class="row">
-                    <button id="btnregister" class="formButton btn waves-effect waves-light" type="submit" name="action">Register
-                      <i class="material-icons right"></i>
-                    </button>
-                    </div>
-                    <div class="row">
-                      <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     </div>
                   </form>
-              </form>
+              
             </div>
           </div> </body>
-
-
+        
+        
 </html>
