@@ -1,6 +1,10 @@
-$(document).ready(function () {
-    $("#btnLogin").click(logIn)
+
+$(document).ready(function(){
+  $('#btnLogin').click(function(){
+    logIn();
+  });
 });
+
 
 var app = {
     // Application Constructor
@@ -39,23 +43,39 @@ function onSignIn(googleUser) {
   }
 */
 
-
+    
 
   function logIn (){
     console.log("entra function login jquery");
     email = $("#inputEmail").val();
     password = $("#inputPass").val();
-    console.log(email, pass);
-    const request = require("request-promise"),
+    console.log(email, password);
     //RUTA = "https://app-intercruises.herokuapp.com/login";
-    RUTA = "http://localhost:3000/login"
-request({
-    uri: RUTA,
-    json: true, // Para que lo decodifique automáticamente 
-}).then(
-    username,
-    password
-);
-  }
+    
+   $.ajax({
+            type: "POST",
+             //beforeSend: function(xhr){xhr.setRequestHeader('X-Test-Header', 'test-value');},
+            contentType: 'application/json',
+            accept: 'application/json',
+            crossDomain: true,
+            //url: 'https://app-intercruises.herokuapp.com/login',
+            url: 'http://localhost:3000/login',
+            data: {
+                "username": email,
+                "password": password
+            },
+            success: function(data)
+            {
+                if (data === 'Correct') {
+                    console.log("SUCCESS");
+                }
+                else {
+                    console.log("ERROR");
+                    alert(data);
+                }
+            }
+        });
+
+    }
 
 app.initialize();
