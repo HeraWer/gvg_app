@@ -2,14 +2,11 @@ $(document).ready(function () {
     $("#btnLogin").click(logIn)
 });
 
-
 var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
-
-    
 
     // deviceready Event Handler
     //
