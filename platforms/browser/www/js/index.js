@@ -69,13 +69,15 @@
                     $('.errorLogin').hide();
                     email = $("#inputEmail").val();
                     password = $("#inputPass").val();
-                    console.log(email, password);
+                    var userName = '{"username":"'+email+'", "password":"'+password+'"}';
+                    var parseUserName = JSON.parse(userName); 
                     //RUTA = "https://app-intercruises.herokuapp.com/login";
             
                     $.ajax({
-                type: "GET",
-                url: 'https://app-intercruises.herokuapp.com/login',
-                data: '{"username":"'+email+'", "password:":"'+password+'"}',
+                type: "POST",
+                //url: 'https://app-intercruises.herokuapp.com/login',
+                url: 'http://localhost:3000/login',
+                data: parseUserName,
                 crossDomain: true,
                 dataType: "json"
             })
