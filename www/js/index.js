@@ -71,17 +71,14 @@
                     password = $("#inputPass").val();
 
                     var userName = '{"username":"'+email+'", "password":"'+password+'"}';
-
                     var parseUserName = JSON.parse(userName); 
-
-                    console.log(email, password);
                     //RUTA = "https://app-intercruises.herokuapp.com/login";
             
                     $.ajax({
-                url: 'http://localhost:3000/login',
+                type: "POST",
                 //url: 'https://app-intercruises.herokuapp.com/login',
+                url: 'http://localhost:3000/login',
                 data: parseUserName,
-                type: 'POST',
                 crossDomain: true,
                 dataType: 'json',
                 //data: '{"username":"'+email+'", "password:":"'+password+'"}',
