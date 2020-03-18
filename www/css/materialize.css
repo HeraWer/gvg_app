@@ -6,7 +6,7 @@
   height: 100% !important;
 }
 .menuButton {
-  background-color: #9AA09F !important;
+  background-color: #F3F3F3 !important;
   min-width: 200px !important;
   min-height: 200px !important;
   max-width: 200px !important;
@@ -14,7 +14,7 @@
   border-radius: 20px !important;
 }
 .menuGeneral {
-    background-color: #44464A !important;
+    background-color: #699CEF !important;
 }
 .menuSlide {
   margin-top: 25% !important;

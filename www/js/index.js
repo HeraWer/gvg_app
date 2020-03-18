@@ -47,7 +47,6 @@ var app = {
 
 
               function logIn (){
-                console.log("entra function login jquery");
                 if($("#inputPass").val()==""&&$("#inputEmail").val()==""){
                     console.log("Email and password empty");
                     $('.errorLogin').hide();
