@@ -74,25 +74,15 @@
                     var data = JSON.parse(userName); 
                     RUTA_HEROKU = "https://app-intercruises.herokuapp.com/login";
                     RUTA_LOCAL = "http://localhost:3000/login";
-            
-                    /*$.ajax({
-                type: "POST",
-                //url: 'https://app-intercruises.herokuapp.com/login',
-                url: 'http://localhost:3000/login',
-                data: parseUserName,
-                crossDomain: true,
-                dataType: 'json',
-                succes: function(data) {
-                    console.log(data);
-                } 
-            })*/
+                    
             $.ajax({
                 method: "POST",
-                url: RUTA_LOCAL,
+                url: RUTA_HEROKU,
                 data: data,
                 dataType: "json",
               }).done(function (data) {
                 console.log(data.token);
+
               }).fail(function (msg) {
                 console.log("ERROR LLAMADA AJAX");
               });
