@@ -71,30 +71,32 @@
                     password = $("#inputPass").val();
 
                     var userName = '{"username":"'+email+'", "password":"'+password+'"}';
-                    var parseUserName = JSON.parse(userName); 
-                    //RUTA = "https://app-intercruises.herokuapp.com/login";
+                    var data = JSON.parse(userName); 
+                    RUTA_HEROKU = "https://app-intercruises.herokuapp.com/login";
+                    RUTA_LOCAL = "http://localhost:3000/login";
             
-                    $.ajax({
+                    /*$.ajax({
                 type: "POST",
-                url: 'https://app-intercruises.herokuapp.com/login',
-                //url: 'http://localhost:3000/login',
+                //url: 'https://app-intercruises.herokuapp.com/login',
+                url: 'http://localhost:3000/login',
                 data: parseUserName,
                 crossDomain: true,
                 dataType: 'json',
-                //data: '{"username":"'+email+'", "password:":"'+password+'"}',
-                succes: function() {
-                    console.log("SUCCESS !");
+                succes: function(data) {
+                    console.log(data);
                 } 
-            })
-            .fail(function () {
-                M.toast({
-                    html: 'No se pudo establecer conexión con el servidor'
-                })
-            })
+            })*/
+            $.ajax({
+                method: "POST",
+                url: RUTA_LOCAL,
+                data: data,
+                dataType: "json",
+              }).done(function (data) {
+                console.log(data.token);
+              }).fail(function (msg) {
+                console.log("ERROR LLAMADA AJAX");
+              });
             }
-
-         
-
-            }
+            }    
 
         app.initialize();
