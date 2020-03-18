@@ -83,7 +83,7 @@ var app = {
                     
             $.ajax({
                 method: "POST",
-                url: RUTA_LOCAL,
+                url: RUTA_HEROKU,
                 data: data,
                 dataType: "json",
               }).done(function (data) {
