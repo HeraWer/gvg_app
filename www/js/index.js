@@ -1,4 +1,4 @@
-
+var token;
 $(document).ready(function(){
   $('.errorLogin').hide();
   $('#btnLogin').click(function(){
@@ -83,14 +83,23 @@ var app = {
                     
             $.ajax({
                 method: "POST",
-                url: RUTA_HEROKU,
+                url: RUTA_LOCAL,
                 data: data,
                 dataType: "json",
               }).done(function (data) {
+                token = data.token;
+                localStorage.setItem("token",token);
                 console.log(data.token);
-
+                if(data.token){
+                    window.location.replace("main_menu.html");
+                }
+                else {
+                    $('.errorLogin').hide();
+                    $('#errorEmailPass').show();
+                }
               }).fail(function (msg) {
                 console.log("ERROR LLAMADA AJAX");
+                M.toast({html: 'Error en la conexión'})
               });
             }
             }    

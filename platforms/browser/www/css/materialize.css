@@ -1,3 +1,58 @@
+.botones {
+  
+}
+.menuButton img {
+  width: 100% !important;
+  height: 100% !important;
+}
+.menuButton {
+  background-color: #9AA09F !important;
+  min-width: 200px !important;
+  min-height: 200px !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  border-radius: 20px !important;
+}
+.menuGeneral {
+    background-color: #44464A !important;
+}
+.menuSlide {
+  margin-top: 25% !important;
+}
+.name {
+  font-size: 50px !important;
+}
+.email {
+    font-size: 30px !important;
+}
+.sidenav {
+  min-width: 60%;
+}
+.star {
+  margin-right: 1px !important;
+  padding-right: 1px !important;
+  font-size: 40px;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+span.title{
+  font-size: 35px !important;
+  line-height: 50px !important;
+  vertical-align: middle !important;
+}
+.collection .collection-item {
+    padding: : 150px !important;
+    height: 300px !important; 
+}
+.menu-icon {
+  width: 15%;
+  height: 15%;
+
+}
+.main_menu {
+  background-color: #39345C !important;
+}
 .errorLogin {
   border: 2px solid rgb(255, 99, 71) !important;
   background-color: rgb(255, 99, 71, 0.5) !important;
@@ -2778,7 +2833,7 @@ video.responsive-video {
   display: inline-block;
   border-radius: 2px;
   text-align: center;
-  vertical-align: top;
+  vertical-align: center;
   height: 30px;
 }
 
@@ -2843,7 +2898,7 @@ video.responsive-video {
 .breadcrumb:before {
   content: '\E5CC';
   color: rgba(255, 255, 255, 0.7);
-  vertical-align: top;
+  vertical-align: center;
   display: inline-block;
   font-family: 'Material Icons';
   font-weight: normal;
@@ -3137,22 +3192,30 @@ td, th {
 .collection .collection-item {
   background-color: #fff;
   line-height: 1.5rem;
-  padding: 10px 20px;
+  padding: 20px 20px;
   margin: 0;
+  height: 150px !important;
   border-bottom: 1px solid #e0e0e0;
 }
-
+/* avatar dentro del li */
 .collection .collection-item.avatar {
-  min-height: 84px;
-  padding-left: 72px;
+  min-height: 150px !important;
+  padding-left: 19% !important;
+  padding-right: 72px;
   position: relative;
+  height: auto !important;
+  vertical-align: middle !important;
+  text-align: justify !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
 }
 
 .collection .collection-item.avatar:not(.circle-clipper) > .circle,
 .collection .collection-item.avatar :not(.circle-clipper) > .circle {
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 150px !important;
+  height: 150px !important;
   overflow: hidden;
   left: 15px;
   display: inline-block;
@@ -3176,8 +3239,6 @@ td, th {
 }
 
 .collection .collection-item.avatar .secondary-content {
-  position: absolute;
-  top: 16px;
   right: 16px;
 }
 
@@ -5780,9 +5841,9 @@ body.keyboard-focused .dropdown-content li:focus {
 
 .waves-circle {
   text-align: center;
-  width: 2.5em;
-  height: 2.5em;
-  line-height: 2.5em;
+  width: 5em;
+  height: 5em;
+  line-height: 5em;
   border-radius: 50%;
   -webkit-mask-image: none;
 }

@@ -2,62 +2,59 @@
 <html>
 <header>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</header>
-<body bgcolor="#512077">
-
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="css/materialize.min.css">
-
-  <!-- Script JQuery -->
+  <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-
-  <!-- Compiled and minified JavaScript -->
   <script src="js/materialize.min.js"></script>
-
+  <script src="js/main_menu.js"></script>
+</header>
+<body class="main_menu">
 
   <!-- Inicio SideNav --->
-  <ul id="slide-out" class="sidenav">
-    <li><div class="user-view">
-      <div class="background">
-        <img src="img/intercruises.png">
+  <div id="slide-out" class="sidenav menuGeneral">
+    <div class="botones">
+      <div class="row menuSlide fila">
+        <div id="profileButton" class="col s1 card-panel card menuButton"><img src="img/profile.png"/></div>
+        <div id="calendarButton" class="col s1 card-panel card menuButton"><img src="img/calendar.png"/></div>
       </div>
-      <a href="#user"><img class="circle" src="img/menu.png"></a>
-      <a href="#name"><span class="white-text name">John Doe</span></a>
-      <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-  </ul>
-  <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <div class="row fila">
+        <div id="chatButton" class="col s1 card-panel card menuButton"><img src="img/chat.png"/></div>
+        <div id="mapButton" class="col s1 card-panel card menuButton"><img src="img/map.png"/></div>
+      </div>
+      <div class="row fila">
+        <div id="newsfeedButton" class="col s1 card-panel card menuButton"><img src="img/newsfeed.png"/></div>
+        <div id="settingsButton" class="col s1 card-panel card menuButton"><img src="img/settings.png"/></div>
+      </div>
+    </div>
+  </div>
+  <a href="#" data-target="slide-out" class="sidenav-trigger"><image src="img/menu.png" class="menu-icon"/></i></a>
   <!-- Fin SideNav --->
 
-  <!-- Inicio Grid --->
+  <!-- Inicio lista newsfeed -->
+  <ul class="collection">
+    <li class="collection-item avatar">
+      <img src="img/image14.png"class="circle">
+      <span class="title">Pedro Sanchez solicita chofer para las 17:00 en el puente 1</span>
+      <a href="#!" class="secondary-content star"><i class="material-icons star">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <img src="img/image13.png"class="circle">
+      <span class="title">Pedro Sanchez solicita chofer para las 17:00 en el puente 1</span>
+      <a href="#!" class="secondary-content star"><i class="material-icons star">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <img src="img/image12.png"class="circle">
+      <span class="title">Julio García</span>
+      <a href="#!" class="secondary-content star"><i class="material-icons star">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <img src="img/image11.png"class="circle">
+      <span class="title">Laura Gimenez acepta el puesto de camarera</span>
+      <a href="#!" class="secondary-content star"><i class="material-icons star" style="margin-right: 1px">grade</i></a>
+    </li>
 
-  <div class="row">
+  </ul>
+  <!-- Fin lista newsfeed -->
 
-     <div class="col s4">
-       <!-- Promo Content 1 goes here -->
-       <i class="center material-icons">query_builder</i>
-       <p> esto es una prueba </p>
-     </div>
-     <div class="col s4">
-       <!-- Promo Content 2 goes here -->
-       <i class="material-icons">swap_horiz</i>
-       <p> esto es otra prueba </p>
-     </div>
-     <div class="col s4">
-       <!-- Promo Content 3 goes here -->
-       <i class="material-icons">trending_down</i>
-      <p>esto es una terera prueba</p>
-     </div>
-
-   </div>
-
-  <!-- Fin Grid --->
-  <script src="js/main_menu.js"></script>
 
 </body>
 </html>
