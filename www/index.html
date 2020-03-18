@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html>
-    <head>
-    <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
+  <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="js/jquery-1.5.0.mobile.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="js/index.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="js/index.js"></script>
 
-    <meta name="viewport" content="width=device-width, user-scalable=no">
-    <title>InterCruises</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>InterCruises</title>
 
-		<style>
-		/* For avoiding title truncation in wp8 */
-		.ui-header .ui-title {
-				overflow: visible !important;
-		}
-		/* For fixing the absolute position issue for the default cordova gen page*/
-		#cjp-accordion1 .app {
-				left: 5px !important;
-				margin: 5px !important;
-				position: relative !important;
-		}
-		</style>
-	
-    </head>
-    <body ng-app="mainModule" ng-controller="mainController">
-      <img src="img/intercruises.png" id="logo">
-        <div id="login-page">
-            <div class="col s12 z-depth-6 card-panel card">
-              <form class="col s12">
+  <style>
+    /* For avoiding title truncation in wp8 */
+    .ui-header .ui-title {
+      overflow: visible !important;
+    }
+    /* For fixing the absolute position issue for the default cordova gen page*/
+    #cjp-accordion1 .app {
+      left: 5px !important;
+      margin: 5px !important;
+      position: relative !important;
+    }
+  </style>
 
-                <div class="row">
-                  <div class="input-field col s6 login">
-                    <input id="inputEmail" type="text" class="validate">
-                    <label for="email">Email</label>
-                  </div>
-                </div>
+</head>
+<body ng-app="mainModule" ng-controller="mainController">
+  <img src="img/intercruises.png" id="logo">
+  <div id="login-page">
+    <div class="col s12 z-depth-6 card-panel card">
+      <form class="col s12">
 
-                  <div class="row">
-                    <div class="input-field col s6 login">
-                      <input id="inputPass" type="password" class="validate">
-                      <label for="password">Password</label> 
-                    </div>
-                  </div>
-                    <div class="row">
-                    <button id="btnLogin" onclick="return false;" class="formButton btn waves-effect waves-light">Login
-                      <i class="material-icons right"></i>
-                    </button>
-                    </div>
-                  <div id="errorEmailPass" class="errorLogin card-panel card">
-                    Error - Email o contraseña incorrectos
-                  </div>
-                  <div id="errorEmail" class="errorLogin card-panel card">
-                    Error - Email vacio
-                  </div>
-                  <div id="errorPass" class="errorLogin card-panel card">
-                    Error - Contraseña vacia
-                  </div>
-                  </form>
-              
-            </div>
-          </div> </body>
-        
-        
+        <div class="row">
+          <div class="input-field col s6 login">
+            <input id="inputEmail" type="text" class="validate">
+            <label for="email">User</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6 login">
+            <input id="inputPass" type="password" class="validate">
+            <label for="password">Password</label> 
+          </div>
+        </div>
+        <div class="row">
+          <button id="btnLogin" onclick="return false;" class="formButton btn waves-effect waves-light">Login
+            <i class="material-icons right"></i>
+          </button>
+        </div>
+        <div id="errorEmailPass" class="errorLogin card-panel card">
+          Error - User y/o contraseña incorrectos
+        </div>
+        <div id="errorEmail" class="errorLogin card-panel card">
+          Error - User vacio
+        </div>
+        <div id="errorPass" class="errorLogin card-panel card">
+          Error - Contraseña vacia
+        </div>
+      </form>
+
+    </div>
+  </div> 
+</body>
+
+
 </html>
