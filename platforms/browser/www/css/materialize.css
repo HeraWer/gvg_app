@@ -1,7 +1,6 @@
 .errorLogin {
   border: 2px solid rgb(255, 99, 71) !important;
   background-color: rgb(255, 99, 71, 0.5) !important;
-  font-weight: bold !important;
   color: red !important;
 }
 .login {
