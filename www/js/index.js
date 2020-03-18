@@ -76,8 +76,8 @@
             
                     $.ajax({
                 type: "POST",
-                //url: 'https://app-intercruises.herokuapp.com/login',
-                url: 'http://localhost:3000/login',
+                url: 'https://app-intercruises.herokuapp.com/login',
+                //url: 'http://localhost:3000/login',
                 data: parseUserName,
                 crossDomain: true,
                 dataType: 'json',
