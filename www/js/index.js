@@ -82,7 +82,7 @@ var app = {
                     
             $.ajax({
                 method: "POST",
-                url: RUTA_HEROKU,
+                url: RUTA_LOCAL,
                 data: data,
                 dataType: "json",
               }).done(function (data) {
@@ -90,7 +90,7 @@ var app = {
                 localStorage.setItem("token",token);
                 console.log(data.token);
                 if(data.token){
-                    window.location.replace("main_menu.html");
+                    window.location.replace("main.html");
                 }
                 else {
                     $('.errorLogin').hide();

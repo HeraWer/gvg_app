@@ -1,16 +1,18 @@
-.botones {
-  
-}
 .menuButton img {
   width: 100% !important;
   height: 100% !important;
 }
+.menu-icon {
+  z-index: 100 !important;
+  margin-top: 0px !important;
+  width: 15%;
+}
 .menuButton {
   background-color: #F3F3F3 !important;
-  min-width: 200px !important;
-  min-height: 200px !important;
-  max-width: 200px !important;
-  max-height: 200px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
   border-radius: 20px !important;
 }
 .menuGeneral {
@@ -37,19 +39,17 @@
   align-items: center !important;
 }
 span.title{
-  font-size: 35px !important;
-  line-height: 50px !important;
+  font-size: 17px !important;
+  line-height: 18px !important;
   vertical-align: middle !important;
+  margin-left: 50px !important;
+  margin-right: 0px !important;
 }
 .collection .collection-item {
     padding: : 150px !important;
-    height: 300px !important; 
+    height: 100px !important; 
 }
-.menu-icon {
-  width: 15%;
-  height: 15%;
 
-}
 .main_menu {
   background-color: #39345C !important;
 }
@@ -3199,9 +3199,8 @@ td, th {
 }
 /* avatar dentro del li */
 .collection .collection-item.avatar {
-  min-height: 150px !important;
+  min-height: 100px !important;
   padding-left: 19% !important;
-  padding-right: 72px;
   position: relative;
   height: auto !important;
   vertical-align: middle !important;
@@ -3214,8 +3213,8 @@ td, th {
 .collection .collection-item.avatar:not(.circle-clipper) > .circle,
 .collection .collection-item.avatar :not(.circle-clipper) > .circle {
   position: absolute;
-  width: 150px !important;
-  height: 150px !important;
+  width: 90px !important;
+  height: 90px !important;
   overflow: hidden;
   left: 15px;
   display: inline-block;
@@ -7640,7 +7639,7 @@ input[type=range]::-ms-thumb {
 
 .sidenav {
   position: fixed;
-  width: 300px;
+  width: 250px;
   left: 0;
   top: 0;
   margin: 0;
