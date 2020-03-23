@@ -1,11 +1,9 @@
-.menuButton img {
-  width: 100% !important;
-  height: 100% !important;
+#profilePage {
+  text-align: center !important;
 }
-.menu-icon {
-  z-index: 100 !important;
-  margin-top: 0px !important;
-  width: 15%;
+#profileImageDiv img#profileImage{
+  height: 50%;
+  width: 50%;
 }
 .menuButton {
   background-color: #F3F3F3 !important;
@@ -15,6 +13,19 @@
   max-height: 100px !important;
   border-radius: 20px !important;
 }
+.menuButton img {
+  min-width: 100% !important;
+  min-height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin-top: 10% !important;
+}
+.menu-icon {
+  z-index: 100 !important;
+  margin-top: 0px !important;
+  width: 15%;
+}
+
 .menuGeneral {
     background-color: #699CEF !important;
 }

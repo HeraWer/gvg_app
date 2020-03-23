@@ -6,6 +6,7 @@
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
   <script src="js/materialize.min.js"></script>
   <script src="js/main.js"></script>
+
   <meta name ="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 </head>
 <body class="main_menu">
@@ -31,29 +32,67 @@
   </div>
   <!-- Fin Menu SideNav --->
 
-    <div id="newsfeedPage" class="pages">
-      <ul class="collection">
+  <div id="newsfeedPage" class="pages">
+    <ul class="collection newsFeedCollection">
 
-      </ul>
-    </div>
-    <div class="secondaryPages">
-      <div id="profilePage" class="pages">
-        <div class="col s12 z-depth-6 card-panel card">
-          PERFIL
+    </ul>
+  </div>
+  <div class="secondaryPages">
+
+    <div id="profilePage" class="pages">
+      <div class="col s12 z-depth-6 card-panel card">
+        <form class="col s12">
+          <div id="profileImageDiv" class="row">
+
+          </div>
+          <div id="profileNameDiv" class="row">
+               
+          </div> 
+          <div id="profileLastNameDiv" class="row">
+              
+          </div> 
+          <div id="profileUserDiv" class="row">
+               
+          </div>       
+          <div class="row">
+            <div class="input-field col s6 login">
+              <input id="inputPass" type="text" class="validate">
+              <label for="Password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6 login">
+              <input id="inputPass2" type="text" class="validate">
+              <label for="Confirm password">Confirm password</label>
+            </div>
+          </div>
+           <div class="row">
+          <button id="btnConfirm" onclick="return false;" class="formButton btn waves-effect waves-light">Confirm
+            <i class="material-icons right"></i>
+          </button>
         </div>
+        </form>
       </div>
+    </div>
+
     <div id="chatPage" class="pages">
       chat
     </div>
+
     <div id="mapPage" class="pages">
       map
     </div>
+
     <div id="settingsPage" class="pages">
-      settings
+      <ul class="collection settingsButtons">
+        <li id="logOut" class="collection-item avatar waves-effect waves-light"><img src="img/logOut.png"><span class="title">Log Out</span></li>
+      </ul>
     </div>
+
     <div id="calendarPage" class="pages">
       calendar
     </div>
-    </div>
+
+  </div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 var token;
+var email;
 $(document).ready(function(){
   $('.errorLogin').hide();
   $('#btnLogin').click(function(){
@@ -82,7 +83,7 @@ var app = {
                     
             $.ajax({
                 method: "POST",
-                url: RUTA_LOCAL,
+                url: RUTA_HEROKU,
                 data: data,
                 dataType: "json",
               }).done(function (data) {
@@ -90,6 +91,7 @@ var app = {
                 localStorage.setItem("token",token);
                 console.log(data.token);
                 if(data.token){
+                    localStorage.setItem("currentUser",email);
                     window.location.replace("main.html");
                 }
                 else {
@@ -98,7 +100,7 @@ var app = {
                 }
               }).fail(function (msg) {
                 console.log("ERROR LLAMADA AJAX");
-                M.toast({html: 'Error en la conexión'})
+                M.toast({html: 'Error en la conexion'})
               });
             }
             }    
