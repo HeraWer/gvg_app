@@ -41,7 +41,7 @@
 
     <div id="profilePage" class="pages">
       <div class="col s12 z-depth-6 card-panel card">
-        <form class="col s12">
+        <form id="profileForm" enctype="multipart/form-data" class="col s12" method="post">
           <div id="profileImageDiv" class="row">
 
           </div>
@@ -67,7 +67,7 @@
             </div>
           </div>
            <div class="row">
-          <button id="btnConfirm" onclick="return false;" class="formButton btn waves-effect waves-light">Confirm
+          <button id="btnConfirm" onclick="return false;" type="submit" class="formButton btn waves-effect waves-light">Confirm
             <i class="material-icons right"></i>
           </button>
         </div>

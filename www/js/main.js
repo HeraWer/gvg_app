@@ -2,6 +2,7 @@ var token = localStorage.getItem("token");
 var currentUser = localStorage.getItem("currentUser");
 var imInPage="newsfeedPage";
 var butonVirgin;
+var foto;
 RUTA_HEROKU = "https://app-intercruises.herokuapp.com";
 RUTA_LOCAL = "http://localhost:3000";
 
@@ -14,7 +15,10 @@ $(document).ready(function(){
 	// capturando evento click panel settings para hacer logout
 	$('.settingsButtons').click(function(e){openPage(e)});
 	// capturando evento click en imagen llamamos funcion input oculto tipo file (seleccionar foto)
-	$('body').on('click','img#profileImage',function(){$('#fileUpload').click()})
+	$('body').on('click','img#profileImage',function(){$('#fileUpload').click()});
+
+	$("#btnConfirm").click(function(){saveImage()});
+
 });
 
 function onFirstStart() {
@@ -24,6 +28,36 @@ function onFirstStart() {
 	console.log(token);
 	getNews();
 }
+
+function checkImageSelected () {
+	// Esto es una preview (es un URL BLOB, un apuntador, no es el BLOB original, no se puede almacenar)
+	$("#fileUpload").change(function(){
+	foto = document.getElementById('fileUpload').files[0];	
+	document.getElementById('profileImage').src = URL.createObjectURL(foto);
+});
+}
+
+function saveImage () {
+	/*var formData = new FormData(document.getElementById("fileUpload"));
+		formData.append("dato", "valor");
+	
+	console.log(formData);
+		saveImage(formData);
+	*/
+	$.ajax({
+		method: "POST",
+		url: RUTA_HEROKU+"/setPhoto",
+		dataType: "html",
+    	data: formData
+	}).done(function (data) {
+		console.log(data);
+
+	}).fail(function (msg) {
+		console.log("ERROR LLAMADA AJAX");
+		M.toast({html: 'Error en la conexión'})
+	});
+}
+
 
 function openPage(e){
 	var id = e.target.id;
@@ -105,7 +139,7 @@ function getNews () {
 function getUser () {
 	console.log('getting user info');
 	var userName = '{"username":"'+currentUser+'"}';
-    var data = JSON.parse(userName); 
+	var data = JSON.parse(userName); 
 
 	$.ajax({
 		method: "POST",
@@ -140,11 +174,12 @@ function insertNews(datos) {
 
 function insertProfile(datos) {
 	$('#profileImageDiv').empty();
-		$('#profileImageDiv').append('<img id="profileImage" src="img/image14.png" alt="img/profile.png" class="circle imageProfile"/> <input type="file" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none" />');
+	$('#profileImageDiv').append('<img id="profileImage" src="img/image14.png" alt="img/profile.png" class="circle imageProfile"/> <input type="file" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
+	checkImageSelected();
 	$('#profileNameDiv').empty();
-		$('#profileNameDiv').append('<b>Name: </b>'+datos.name);
+	$('#profileNameDiv').append('<b>Name: </b>'+datos.name);
 	$('#profileLastNameDiv').empty();
-		$('#profileLastNameDiv').append('<b>Last Name: </b>'+datos.lastname);
+	$('#profileLastNameDiv').append('<b>Last Name: </b>'+datos.lastname);
 	$('#profileUserDiv').empty();
-		$('#profileUserDiv').append('<b>Username: </b>'+datos.username);
+	$('#profileUserDiv').append('<b>Username: </b>'+datos.username);
 }
