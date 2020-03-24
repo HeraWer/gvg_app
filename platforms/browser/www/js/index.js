@@ -1,5 +1,9 @@
 var token;
 var email;
+
+var RUTA_HEROKU = "https://app-intercruises.herokuapp.com";
+var RUTA_LOCAL = "http://localhost:3000";
+
 $(document).ready(function(){
   $('.errorLogin').hide();
   $('#btnLogin').click(function(){
@@ -78,31 +82,30 @@ var app = {
 
                     var userName = '{"username":"'+email+'", "password":"'+password+'"}';
                     var data = JSON.parse(userName); 
-                    RUTA_HEROKU = "https://app-intercruises.herokuapp.com/login";
-                    RUTA_LOCAL = "http://localhost:3000/login";
                     
-            $.ajax({
-                method: "POST",
-                url: RUTA_HEROKU,
-                data: data,
-                dataType: "json",
-              }).done(function (data) {
-                token = data.token;
-                localStorage.setItem("token",token);
-                console.log(data.token);
-                if(data.token){
-                    localStorage.setItem("currentUser",email);
-                    window.location.replace("main.html");
+                    
+                    $.ajax({
+                        method: "POST",
+                        url: RUTA_LOCAL+"/login",
+                        data: data,
+                        dataType: "json",
+                    }).done(function (data) {
+                        token = data.token;
+                        localStorage.setItem("token",token);
+                        console.log(data.token);
+                        if(data.token){
+                            localStorage.setItem("currentUser",email);
+                            window.location.replace("main.html");
+                        }
+                        else {
+                            $('.errorLogin').hide();
+                            $('#errorEmailPass').show();
+                        }
+                    }).fail(function (msg) {
+                        console.log("ERROR LLAMADA AJAX");
+                        M.toast({html: 'Error en la conexion'})
+                    });
                 }
-                else {
-                    $('.errorLogin').hide();
-                    $('#errorEmailPass').show();
-                }
-              }).fail(function (msg) {
-                console.log("ERROR LLAMADA AJAX");
-                M.toast({html: 'Error en la conexion'})
-              });
-            }
             }    
 
-        app.initialize();
+            app.initialize();
