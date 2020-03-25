@@ -165,26 +165,26 @@ function getPhoto () {
 		//var formData = new FormData(data);
 		if(data=="File Not Found") {
 			// If user haven't image, load default image
+			console.log("loading default photo");
 			document.getElementById('profileImage').src = "img/defaultProfile.png";
 		}
 		else {
 			var binaryData = [];
 			binaryData.push(data);
 			var blob = new Blob(binaryData);
-			
-			var reader = new FileReader();
-			reader.readAsDataURL(blob); 
- 			reader.onloadend = function() {
-     		var base64data = reader.result;
+			const blobUrl = URL.createObjectURL(blob)
+			//var reader = new FileReader();
+			//reader.readAsDataURL(blob); 
+ 			//reader.onloadend = function() {
+     		//var base64data = reader.result;
      		var urlCreator = window.URL || window.webkitURL;
    			//var imageUrl = urlCreator.createObjectURL(base64data);
 			//$("#profileImage").attr("data:image/png;base64,", imageUrl);
-			finalBase = base64data.replace("data:application/octet-stream;base64,","");                
-     		document.querySelector("#profileImage").src = "data:image/png;base64,"+finalBase;
-     		console.log(finalBase);	
- 			}
-
-			
+			//finalBase = base64data.replace("data:application/octet-stream;base64,","");                
+     		//document.querySelector("#profileImage").src = "data:image/png;base64,"+finalBase;
+     		document.querySelector("#profileImage").src = /*'data:image/jpeg;base64,' + */blobUrl;
+     		console.log(blobUrl);	
+ 			//}
 		}
 
 	}).fail(function (msg) {
@@ -192,33 +192,7 @@ function getPhoto () {
 		M.toast({html: 'Error en la conexión'})
 	});
 }
-function base64Encode(str) {
-        var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-        var out = "", i = 0, len = str.length, c1, c2, c3;
-        while (i < len) {
-            c1 = str.charCodeAt(i++) & 0xff;
-            if (i == len) {
-                out += CHARS.charAt(c1 >> 2);
-                out += CHARS.charAt((c1 & 0x3) << 4);
-                out += "==";
-                break;
-            }
-            c2 = str.charCodeAt(i++);
-            if (i == len) {
-                out += CHARS.charAt(c1 >> 2);
-                out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
-                out += CHARS.charAt((c2 & 0xF) << 2);
-                out += "=";
-                break;
-            }
-            c3 = str.charCodeAt(i++);
-            out += CHARS.charAt(c1 >> 2);
-            out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
-            out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
-            out += CHARS.charAt(c3 & 0x3F);
-        }
-        return out;
-    }
+
 
 function pageIsActive (iden) {
 	if($('div.'+iden).hasClass('active')) {
