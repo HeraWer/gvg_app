@@ -37,7 +37,9 @@ function checkImageSelected () {
 }
 
 function saveImage () {
-	var form = $('#profileForm')[0]; // You need to use standard javascript object here
+	//var fd = new FormData();
+        //var file = $('#fileUpload').prop('files');
+     var form = $('#profileForm')[0]; // You need to use standard javascript object here
 	var formData = new FormData(form);
 
     $.ajax({
@@ -161,15 +163,62 @@ function getPhoto () {
        contentType: false
 	}).done(function (data) {
 		//var formData = new FormData(data);
-		console.log(data);
-		//console.log(formData);
-		document.getElementById('profileImage').src = data;
+		if(data=="File Not Found") {
+			// If user haven't image, load default image
+			document.getElementById('profileImage').src = "img/defaultProfile.png";
+		}
+		else {
+			var binaryData = [];
+			binaryData.push(data);
+			var blob = new Blob(binaryData);
+			
+			var reader = new FileReader();
+			reader.readAsDataURL(blob); 
+ 			reader.onloadend = function() {
+     		var base64data = reader.result;
+     		var urlCreator = window.URL || window.webkitURL;
+   			//var imageUrl = urlCreator.createObjectURL(base64data);
+			//$("#profileImage").attr("data:image/png;base64,", imageUrl);
+			finalBase = base64data.replace("data:application/octet-stream;base64,","");                
+     		document.querySelector("#profileImage").src = "data:image/png;base64,"+finalBase;
+     		console.log(finalBase);	
+ 			}
+
+			
+		}
 
 	}).fail(function (msg) {
 		console.log("ERROR LLAMADA AJAX");
 		M.toast({html: 'Error en la conexión'})
 	});
 }
+function base64Encode(str) {
+        var CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        var out = "", i = 0, len = str.length, c1, c2, c3;
+        while (i < len) {
+            c1 = str.charCodeAt(i++) & 0xff;
+            if (i == len) {
+                out += CHARS.charAt(c1 >> 2);
+                out += CHARS.charAt((c1 & 0x3) << 4);
+                out += "==";
+                break;
+            }
+            c2 = str.charCodeAt(i++);
+            if (i == len) {
+                out += CHARS.charAt(c1 >> 2);
+                out += CHARS.charAt(((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4));
+                out += CHARS.charAt((c2 & 0xF) << 2);
+                out += "=";
+                break;
+            }
+            c3 = str.charCodeAt(i++);
+            out += CHARS.charAt(c1 >> 2);
+            out += CHARS.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+            out += CHARS.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+            out += CHARS.charAt(c3 & 0x3F);
+        }
+        return out;
+    }
 
 function pageIsActive (iden) {
 	if($('div.'+iden).hasClass('active')) {
@@ -189,7 +238,7 @@ function insertNews(datos) {
 
 function insertProfile(datos) {
 	$('#profileImageDiv').empty();
-	$('#profileImageDiv').append('<img id="profileImage" src="img/image14.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
+	$('#profileImageDiv').append('<img id="profileImage" src="img/defaultProfile.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
 	checkImageSelected();
 	getPhoto();
 	$('#profileNameDiv').empty();
