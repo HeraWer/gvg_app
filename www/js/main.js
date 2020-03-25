@@ -19,7 +19,6 @@ $(document).ready(function(){
 	$('body').on('click','img#profileImage',function(){$('#fileUpload').click()});
 
 	$("#btnConfirm").click(function(){saveImage()});
-
 });
 
 function onFirstStart() {
@@ -31,12 +30,10 @@ function onFirstStart() {
 }
 
 function checkImageSelected () {
-	// Esto es una preview (es un URL BLOB, un apuntador, no es el BLOB original, no se puede almacenar)
 	$("#fileUpload").change(function(){
-	foto = document.getElementById('fileUpload').files[0];
-	document.getElementById('profileImage').src = URL.createObjectURL(foto);
-	console.log(foto);
-});
+		foto = document.getElementById('fileUpload').files[0];
+		document.getElementById('profileImage').src = URL.createObjectURL(foto);
+	});
 }
 
 function saveImage () {
@@ -124,7 +121,7 @@ function getNews () {
 	console.log('getting news');
 	$.ajax({
 		method: "GET",
-		url: RUTA_HEROKU+"/allEvents",
+		url: RUTA_LOCAL+"/allEvents",
 		dataType: "json",
 	}).done(function (data) {
 		console.log(data);
@@ -143,12 +140,30 @@ function getUser () {
 
 	$.ajax({
 		method: "POST",
-		url: RUTA_HEROKU+"/getUser",
+		url: RUTA_LOCAL+"/getUser",
 		data: data,
 		dataType: "json",
 	}).done(function (data) {
-		console.log(data);
 		insertProfile(data);
+
+	}).fail(function (msg) {
+		console.log("ERROR LLAMADA AJAX");
+		M.toast({html: 'Error en la conexión'})
+	});
+}
+function getPhoto () {
+	console.log('getting user photo');
+
+	$.ajax({
+		method: "GET",
+		url: RUTA_LOCAL+"/getPhoto",
+		processData: false,
+       contentType: false
+	}).done(function (data) {
+		//var formData = new FormData(data);
+		console.log(data);
+		//console.log(formData);
+		document.getElementById('profileImage').src = data;
 
 	}).fail(function (msg) {
 		console.log("ERROR LLAMADA AJAX");
@@ -174,8 +189,9 @@ function insertNews(datos) {
 
 function insertProfile(datos) {
 	$('#profileImageDiv').empty();
-	$('#profileImageDiv').append('<img id="profileImage" src="img/image14.png" alt="img/profile.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
+	$('#profileImageDiv').append('<img id="profileImage" src="img/image14.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
 	checkImageSelected();
+	getPhoto();
 	$('#profileNameDiv').empty();
 	$('#profileNameDiv').append('<b>Name: </b>'+datos.name);
 	$('#profileLastNameDiv').empty();
