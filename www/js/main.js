@@ -43,7 +43,7 @@ function saveImage () {
 	var formData = new FormData(form);
 
     $.ajax({
-       url: RUTA_LOCAL+"/setPhoto",
+       url: RUTA_HEROKYU + "/setPhoto",
        type: "POST",
        data: formData,
        processData: false,
@@ -123,7 +123,7 @@ function getNews () {
 	console.log('getting news');
 	$.ajax({
 		method: "GET",
-		url: RUTA_LOCAL+"/allEvents",
+		url: RUTA_HEROKU+"/allEvents",
 		dataType: "json",
 	}).done(function (data) {
 		console.log(data);
@@ -142,7 +142,7 @@ function getUser () {
 
 	$.ajax({
 		method: "POST",
-		url: RUTA_LOCAL+"/getUser",
+		url: RUTA_HEROKU+"/getUser",
 		data: data,
 		dataType: "json",
 	}).done(function (data) {
@@ -158,7 +158,7 @@ function getPhoto () {
 
 	$.ajax({
 		method: "GET",
-		url: RUTA_LOCAL+"/getPhoto",
+		url: RUTA_HEROKU+"/getPhoto",
 		processData: false,
        contentType: false
 	}).done(function (data) {

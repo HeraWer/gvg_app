@@ -86,7 +86,7 @@ var app = {
                     
                     $.ajax({
                         method: "POST",
-                        url: RUTA_LOCAL+"/login",
+                        url: RUTA_HEROKU+"/login",
                         data: data,
                         dataType: "json",
                     }).done(function (data) {
