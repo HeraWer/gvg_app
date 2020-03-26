@@ -43,7 +43,7 @@ function saveImage () {
 	var formData = new FormData(form);
 
     $.ajax({
-       url: RUTA_HEROKYU + "/setPhoto",
+       url: RUTA_HEROKU + "/setPhoto",
        type: "POST",
        data: formData,
        processData: false,
