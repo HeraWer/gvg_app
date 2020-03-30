@@ -11,31 +11,29 @@ $(document).ready(function(){
 	onFirstStart();
 	$('div.sidenav-overlay').addClass("pantallaOscura");
 	$('.sidenav').sidenav();
-	// capturando evento click menu lateral
+	// handling click event on slideMenu
 	$('.botones').click(function(e){openPage(e)});
-	// capturando evento click panel settings para hacer logout
+	// handling click event on settings panel to make the logOut
 	$('.settingsButtons').click(function(e){openPage(e)});
-	// capturando evento click en imagen llamamos funcion input oculto tipo file (seleccionar foto)
+	// handling click event on image, calling function input hided type file (select photo)
 	$('body').on('click','img#profileImage',function(){$('#fileUpload').click()});
-
+	
 	$("#btnConfirm").click(function(){saveImage()});
 });
 
 function onFirstStart() {
 	checkToken();
 	console.log("token checked");
+	// If the token is valid (on first start) open directly the newsFeed page
 	if(checkToken()){
-		tokenIsOk();
+		$('.pages').hide();
+		$('#'+imInPage).show();
+		console.log(token);
+		getNews();
 	}
 	else {
 		console.log("token false");
 	}
-}
-function tokenIsOk() {
-	$('.pages').hide();
-	$('#'+imInPage).show();
-	console.log(token);
-	getNews();
 }
 function checkToken() {
 	console.log('checking token');
@@ -69,8 +67,6 @@ function checkImageSelected () {
 }
 
 function saveImage () {
-	//var fd = new FormData();
-        //var file = $('#fileUpload').prop('files');
      var form = $('#profileForm')[0]; // You need to use standard javascript object here
      var formData = new FormData(form);
 
@@ -90,7 +86,7 @@ function saveImage () {
    });
  }
 
-
+ // This function opens the page hiding and showing divs by Jquery 
  function openPage(e){
  	var id = e.target.id;
  	if(id == 'profileButton'&& imInPage!='profilePage') {
@@ -141,7 +137,9 @@ function saveImage () {
  		logOut();
  	}
  }
+
  function logOut () {
+ 	// Remove token and user from browser storage and open login page
  	localStorage.removeItem("token");
  	localStorage.removeItem("currentUser");
  	imInPage="loginPage";
@@ -150,6 +148,7 @@ function saveImage () {
  }
 
  function closeMenu() {
+ 	// function for close menu after click into a menu element
  	console.log('closing menu');
  	$('.menuGeneral').attr('style','transform: translateX(-105%)');
  	$('div.sidenav-overlay').attr('style','display: none; opacity: 0;');
@@ -233,16 +232,6 @@ function saveImage () {
  		M.toast({html: 'Error en la conexión'})
  	});
  }
-
-
- function pageIsActive (iden) {
- 	if($('div.'+iden).hasClass('active')) {
- 		return true;
- 	}
- 	else {
- 		return false;
- 	}
- } 
 
  function insertNews(datos) {
  	$('.newsFeedCollection').empty();

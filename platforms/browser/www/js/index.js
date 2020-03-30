@@ -9,8 +9,8 @@ $(document).ready(function(){
   checkToken();
   $('.errorLogin').hide();
   $('#btnLogin').click(function(){
-  logIn();
-});
+      logIn();
+  });
 });
 
 function checkToken() {
@@ -56,26 +56,15 @@ var app = {
 
                     console.log('Received Event: ' + id);
                 }
-
             }
-            /*
-            function onSignIn(googleUser) {
-                var profile = googleUser.getBasicProfile();
-                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-                console.log('Name: ' + profile.getName());
-                console.log('Image URL: ' + profile.getImageUrl());
-                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-              }
-              */
 
-
-
-              function logIn (){
+            function logIn (){
                 if($("#inputPass").val()==""&&$("#inputEmail").val()==""){
                     console.log("Email and password empty");
                     $('.errorLogin').hide();
                     $('#errorEmailPass').show();
                 }
+                // if we incorpore mail checking :
                 /*else if(!$("#inputEmail").val().includes('@')&&!$("#inputEmail").val().includes('.')){
                     console.log("Email invalido");
                     $('.errorLogin').hide();
