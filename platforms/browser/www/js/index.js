@@ -3,14 +3,33 @@ var email;
 
 var RUTA_HEROKU = "https://app-intercruises.herokuapp.com";
 var RUTA_LOCAL = "http://localhost:3000";
+var token = localStorage.getItem("token");
 
 $(document).ready(function(){
+  checkToken();
   $('.errorLogin').hide();
   $('#btnLogin').click(function(){
-    logIn();
+  logIn();
 });
 });
 
+function checkToken() {
+    console.log('checking token');
+    $.ajax({
+        url: RUTA_LOCAL+"/checkToken",
+        headers: {"Authorization": token},
+        type: "POST",
+        processData: false,
+        contentType: false
+    }).done(function (data) {
+        // Inicio sin token gracias al token en cookie
+        if(data.mensaje == 'Token valido'){
+            window.location.replace("main.html");
+        }
+    }).fail(function (msg) {
+
+    });
+}
 
 var app = {
                 // Application Constructor
@@ -106,6 +125,6 @@ var app = {
                         M.toast({html: 'Error en la conexion'})
                     });
                 }
-            }    
+            }
 
             app.initialize();
