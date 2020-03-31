@@ -119,11 +119,12 @@ function saveImage () {
  		$('#mapPage').show();
  		closeMenu();
  	}
- 	else if(id == 'chatButton' && imInPage!='chatPage') {
- 		imInPage="chatPage";
+ 	else if(id == 'jobsButton' && imInPage!='jobsPage') {
+		getOffers();
+ 		imInPage="jobsPage";
  		console.log(imInPage);
  		$('.pages').hide();
- 		$('#chatPage').show();
+ 		$('#jobsPage').show();
  		closeMenu();
  	}
  	else if(id == 'calendarButton' && imInPage!='calendarPage') {
@@ -231,6 +232,29 @@ function saveImage () {
  		console.log("ERROR LLAMADA AJAX");
  		M.toast({html: 'Error en la conexión'})
  	});
+ }
+ function getOffers(){
+	console.log('getting offers');
+	$.ajax({
+		method: "GET",
+		headers: {"Authorization": token},
+		url: RUTA_LOCAL+"/allOffers",
+		dataType: "json",
+	}).done(function (data) {
+		console.log(data);
+		insertOffers(data);
+
+	}).fail(function (msg) {
+		console.log("ERROR LLAMADA AJAX");
+		M.toast({html: 'Error en la conexion'})
+	});
+ }
+
+ function insertOffers(datos) {
+	$('.jobsCollection').empty();
+	for (var i=0; i<datos.length; i++) {
+		$('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">'+'#'+datos[i].number+' '+datos[i].description+' de '+datos[i].schedule[0].hour_start+'H a '+datos[i].schedule[0].hour_end+'H </span></li>');
+	}
  }
 
  function insertNews(datos) {

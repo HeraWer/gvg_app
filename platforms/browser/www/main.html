@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
   <script src="js/materialize.min.js"></script>
   <script src="js/main.js"></script>
 
-  <meta name ="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+  <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 </head>
+
 <body class="main_menu">
   <div id="burguer-menu">
-    <a href="#" data-target="slide-out" class="sidenav-trigger"><image src="img/menu.png" class="menu-icon"/></i></a>
+    <a href="#" data-target="slide-out" class="sidenav-trigger">
+      <image src="img/menu.png" class="menu-icon" /></i></a>
   </div>
   <!-- Inicio Menu SideNav --->
   <div id="slide-out" class="sidenav menuGeneral waves-effect waves-light">
     <div class="botones">
       <div class="row menuSlide fila">
-        <div id="profileButton" class="profileButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/profile.png"/></div>
-        <div id="calendarButton" class="calendarButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/calendar.png"/></div>
+        <div id="newsfeedButton" class="newsfeedButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/newsfeed.png" /></div>
+        <div id="profileButton" class="profileButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/profile.png" /></div>
       </div>
       <div class="row fila">
-        <div id="chatButton" class="chatButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/chat.png"/></div>
-        <div id="mapButton" class="mapButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/map.png"/></div>
+        <div id="jobsButton" class="jobsButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/jobs.png" /></div>
+        <div id="mapButton" class="mapButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/map.png" /></div>
       </div>
       <div class="row fila">
-        <div id="newsfeedButton" class="newsfeedButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/newsfeed.png"/></div>
-        <div id="settingsButton" class="settingsButton col s1 card-panel card menuButton waves-effect waves-light"><img src="img/settings.png"/></div>
+        <div id="calendarButton" class="calendarButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/calendar.png" /></div>
+        <div id="settingsButton" class="settingsButton col s1 card-panel card menuButton waves-effect waves-light"><img
+            src="img/settings.png" /></div>
       </div>
     </div>
   </div>
@@ -46,14 +56,14 @@
 
           </div>
           <div id="profileNameDiv" class="row">
-               
-          </div> 
+
+          </div>
           <div id="profileLastNameDiv" class="row">
-              
-          </div> 
+
+          </div>
           <div id="profileUserDiv" class="row">
-               
-          </div>       
+
+          </div>
           <div class="row">
             <div class="input-field col s6 login">
               <input id="inputPass" type="text" class="validate">
@@ -66,17 +76,19 @@
               <label for="Confirm password">Confirm password</label>
             </div>
           </div>
-           <div class="row">
-          <button id="btnConfirm" onclick="return false;" type="submit" class="formButton btn waves-effect waves-light">Confirm
-            <i class="material-icons right"></i>
-          </button>
-        </div>
+          <div class="row">
+            <button id="btnConfirm" onclick="return false;" type="submit"
+              class="formButton btn waves-effect waves-light">Confirm
+              <i class="material-icons right"></i>
+            </button>
+          </div>
         </form>
       </div>
     </div>
 
-    <div id="chatPage" class="pages">
-      chat
+    <div id="jobsPage" class="pages">
+      <ul class="collection jobsCollection">
+      </ul>
     </div>
 
     <div id="mapPage" class="pages">
@@ -85,19 +97,23 @@
 
     <div id="settingsPage" class="pages">
       <ul class="collection settingsButtons">
-        <li id="notifications" class="collection-item avatar waves-effect waves-light"><img src="img/notifications.png"><span class="title">Notifications</span>
+        <li id="notifications" class="collection-item avatar waves-effect waves-light"><img
+            src="img/notifications.png"><span class="title">Notifications</span>
           <div class="switch">
             <label>
               <input type="checkbox">
               <span class="lever"></span>
-              </label>
+            </label>
           </div>
-          </li>
-        <li id="adminUsers" class="collection-item avatar waves-effect waves-light"><img src="img/adminUsers.png"><span class="title">Manage Users</span></li>
-          </li>
-        <li id="help" class="collection-item avatar waves-effect waves-light"><img src="img/help.png"><span class="title">Help</span></li>
         </li>
-        <li id="logOut" class="collection-item avatar waves-effect waves-light"><img src="img/logOut.png"><span class="title">Log Out</span></li>
+        <li id="adminUsers" class="collection-item avatar waves-effect waves-light"><img src="img/adminUsers.png"><span
+            class="title">Manage Users</span></li>
+        </li>
+        <li id="help" class="collection-item avatar waves-effect waves-light"><img src="img/help.png"><span
+            class="title">Help</span></li>
+        </li>
+        <li id="logOut" class="collection-item avatar waves-effect waves-light"><img src="img/logOut.png"><span
+            class="title">Log Out</span></li>
       </ul>
     </div>
 
@@ -107,4 +123,5 @@
 
   </div>
 </body>
+
 </html>
