@@ -7,26 +7,26 @@ var imInPage = 'newsfeedPage';
 var butonVirgin;
 var foto;
 
-$(document).ready(function() {
+$(document).ready(function () {
   onFirstStart();
   $('div.sidenav-overlay').addClass('pantallaOscura');
   $('.sidenav').sidenav();
   // handling click event on slideMenu
-  $('.botones').click(function(e) {
+  $('.botones').click(function (e) {
     openPage(e);
   });
 
   // handling click event on settings panel to make the logOut
-  $('.settingsButtons').click(function(e) {
+  $('.settingsButtons').click(function (e) {
     openPage(e);
   });
 
   // handling click event on image, calling function input hided type file (select photo)
-  $('body').on('click', 'img#profileImage', function() {
+  $('body').on('click', 'img#profileImage', function () {
     $('#fileUpload').click();
   });
 
-  $('#btnConfirm').click(function() {
+  $('#btnConfirm').click(function () {
     saveImage();
   });
 });
@@ -56,7 +56,7 @@ function checkToken() {
     type: "POST",
     processData: false,
     contentType: false
-  }).done(function(data) {
+  }).done(function (data) {
     if (data.mensaje == 'Token invalido') {
       logOut();
     }
@@ -68,7 +68,7 @@ function checkToken() {
     if (data.mensaje == '') {
       logOut();
     }
-  }).fail(function(msg) {
+  }).fail(function (msg) {
     logOut();
   });
 
@@ -76,7 +76,7 @@ function checkToken() {
 }
 
 function checkImageSelected() {
-  $("#fileUpload").change(function() {
+  $("#fileUpload").change(function () {
     foto = document.getElementById('fileUpload').files[0];
     document.getElementById('profileImage').src = URL.createObjectURL(foto);
   });
@@ -88,23 +88,21 @@ function saveImage() {
 
   $.ajax({
     url: RUTA_LOCAL + "/setPhoto",
-    headers: {
-      "Authorization": token
-    },
+    headers: { "Authorization": token },
     type: "POST",
     data: formData,
     processData: false,
     contentType: false,
-    success: function(response) {
+    success: function (response) {
       console.log("foto enviada")
     },
-    error: function(jqXHR, textStatus, errorMessage) {
+    error: function (jqXHR, textStatus, errorMessage) {
       console.log(errorMessage); // Optional
     }
   });
 }
 
-// This function opens the page hiding and showing divs by Jquery
+// This function opens the page hiding and showing divs by Jquery 
 function openPage(e) {
   var id = e.target.id;
   if (id == 'profileButton' && imInPage != 'profilePage') {
@@ -114,38 +112,45 @@ function openPage(e) {
     $('.pages').hide();
     $('#profilePage').show();
     closeMenu();
-  } else if (id == 'newsfeedButton' && imInPage != 'newsFeedPage') {
+  }
+  else if (id == 'newsfeedButton' && imInPage != 'newsFeedPage') {
     getNews();
     imInPage = "newsFeedPage";
     console.log(imInPage);
     $('.pages').hide();
     $('#newsfeedPage').show();
     closeMenu();
-  } else if (id == 'settingsButton' && imInPage != 'settingsPage') {
+  }
+  else if (id == 'settingsButton' && imInPage != 'settingsPage') {
     imInPage = "settingsPage";
     console.log(imInPage);
     $('.pages').hide();
     $('#settingsPage').show();
     closeMenu();
-  } else if (id == 'mapButton' && imInPage != 'mapFeedPage') {
+  }
+  else if (id == 'mapButton' && imInPage != 'mapFeedPage') {
     imInPage = "mapPage";
     console.log(imInPage);
     $('.pages').hide();
     $('#mapPage').show();
     closeMenu();
-  } else if (id == 'chatButton' && imInPage != 'chatPage') {
-    imInPage = "chatPage";
+  }
+  else if (id == 'jobsButton' && imInPage != 'jobsPage') {
+    getOffers();
+    imInPage = "jobsPage";
     console.log(imInPage);
     $('.pages').hide();
-    $('#chatPage').show();
+    $('#jobsPage').show();
     closeMenu();
-  } else if (id == 'calendarButton' && imInPage != 'calendarPage') {
+  }
+  else if (id == 'calendarButton' && imInPage != 'calendarPage') {
     imInPage = "calendarPage";
     console.log(imInPage);
     $('.pages').hide();
     $('#calendarPage').show();
     closeMenu();
-  } else if (id == 'logOut') {
+  }
+  else if (id == 'logOut') {
     logOut();
   }
 }
@@ -172,18 +177,16 @@ function getNews() {
   console.log('getting news');
   $.ajax({
     method: "GET",
-    headers: {
-      "Authorization": token
-    },
+    headers: { "Authorization": token },
     url: RUTA_LOCAL + "/allEvents",
-    dataType: "json"
-  }).done(function(data) {
+    dataType: "json",
+  }).done(function (data) {
     console.log(data);
     insertNews(data);
 
-  }).fail(function(msg) {
+  }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX");
-    M.toast({html: 'Error en la conexion'})
+    M.toast({ html: 'Error en la conexion' })
   });
 }
 
@@ -194,18 +197,16 @@ function getUser() {
 
   $.ajax({
     method: "POST",
-    headers: {
-      "Authorization": token
-    },
+    headers: { "Authorization": token },
     url: RUTA_LOCAL + "/getUser",
     data: data,
-    dataType: "json"
-  }).done(function(data) {
+    dataType: "json",
+  }).done(function (data) {
     insertProfile(data);
 
-  }).fail(function(msg) {
+  }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX");
-    M.toast({html: 'Error en la conexión'})
+    M.toast({ html: 'Error en la conexión' })
   });
 }
 function getPhoto() {
@@ -213,68 +214,74 @@ function getPhoto() {
 
   $.ajax({
     method: "GET",
-    headers: {
-      "Authorization": token,
-      'Content-Type': "image/png"
-    },
-    url: RUTA_LOCAL + "/getPhoto"
-    //responseType: 'blob',
-    //processData: false,
-    //contentType: false
-  }).done(function(data) {
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/getPhoto",
+    processData: false,
+    contentType: false
+  }).done(function (data) {
     //var formData = new FormData(data);
     if (data == "File Not Found") {
       // If user haven't image, load default image
       console.log("loading default photo");
       document.getElementById('profileImage').src = "img/defaultProfile.png";
-    } else {
-
-      let peep = new Uint8Array(data);
-      console.log(peep);
-
-      let binaryData = [];
-      binaryData.push(data);
-      let blob = new Blob(binaryData);
-      let reader = new FileReader();
-      //reader.readAsDataURL(blob);
-      reader.readAsArrayBuffer(blob);
-      let result;
-      reader.onload = function(event) {
-        result = event.target.result;
-        console.log(btoa(result));
-        document.querySelector("#profileImage").src = result;
-      };
-
-
-      //localStorage.setItem("photo",blob);
-      //var photo = localStorage.getItem("photo");
-      //var urlCreator = window.URL || window.webkitURL;
-      //var blobUrl = urlCreator.createObjectURL(blob);
-      //console.log(blobUrl);
-
-      //document.querySelector("#profileImage").src = urlCreator.createObjectURL(blob);
-
     }
-
-  }).fail(function(msg) {
+    else {
+      /*console.log(data);
+      var binaryData = [];
+      binaryData.push(data);
+      var blob = new Blob(binaryData, {type: 'image/png'});
+      var reader = new FileReader();
+      reader.readAsBinaryString(blob);
+      reader.onload = function () {
+        var base64data ='data:image/jpeg;base64,' + btoa(event.target.result);
+               document.querySelector("#profileImage").src = base64data;
+        console.log(base64data);
+      }*/
+      document.querySelector("#profileImage").src = 'data:image/png;base64,' + data;
+    }
+  }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX");
-    M.toast({html: 'Error en la conexión'})
+    M.toast({ html: 'Error en la conexión' })
   });
+}
+
+function getOffers() {
+  console.log('getting offers');
+  $.ajax({
+    method: "GET",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/allOffers",
+    dataType: "json",
+  }).done(function (data) {
+    console.log(data);
+    insertOffers(data);
+
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  });
+}
+
+function insertOffers(datos) {
+  $('.jobsCollection').empty();
+  for (var i = 0; i < datos.length; i++) {
+    $('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">' + '#' + datos[i].number + ' ' + datos[i].description + ' de ' + datos[i].schedule[0].hour_start + 'H a ' + datos[i].schedule[0].hour_end + 'H </span></li>');
+  }
 }
 
 function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">' + '#' + datos[i].number + ' ' + datos[i].description + ' de ' + datos[i].schedule[0].hour_start + 'H a ' + datos[i].schedule[0].hour_end + 'H </span><button type="button">Click Me!</button></li>');
+    console.log(datos[i].publisher.username);
+    $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">' + '#' + datos[i].number + ' ' + datos[i].description + ' de ' + datos[i].schedule[0].hour_start + 'H a ' + datos[i].schedule[0].hour_end + 'H </span><button class="waves-effect waves-light btn" type="button">Click Me!</button></li>');
   }
 }
 
 function insertProfile(datos) {
   $('#profileImageDiv').empty();
-  $('#profileImageDiv').append('<img id="profileImage" onerror="alert(this.src);" src="img/defaultProfile.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
+  $('#profileImageDiv').append('<img id="profileImage" src="img/defaultProfile.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
   checkImageSelected();
   getPhoto();
-
   $('#profileNameDiv').empty();
   $('#profileNameDiv').append('<b>Name: </b>' + datos.name);
   $('#profileLastNameDiv').empty();
