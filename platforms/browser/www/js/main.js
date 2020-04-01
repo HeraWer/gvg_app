@@ -9,6 +9,7 @@ var foto;
 
 $(document).ready(function(){
 	onFirstStart();
+	$('#errorPasswords').hide();
 	$('div.sidenav-overlay').addClass("pantallaOscura");
 	$('.sidenav').sidenav();
 	// handling click event on slideMenu
@@ -18,7 +19,7 @@ $(document).ready(function(){
 	// handling click event on image, calling function input hided type file (select photo)
 	$('body').on('click','img#profileImage',function(){$('#fileUpload').click()});
 	
-	$("#btnConfirm").click(function(){saveImage()});
+	$("#btnConfirm").click(function(){changePassword(), saveImage()});
 });
 
 function onFirstStart() {
@@ -64,6 +65,31 @@ function checkImageSelected () {
 		foto = document.getElementById('fileUpload').files[0];
 		document.getElementById('profileImage').src = URL.createObjectURL(foto);
 	});
+}
+
+function changePassword (){
+	password1 = $('#inputPass').val();
+	password2 = $('#inputPass2').val();
+
+	if(password1==password2){
+		$('#errorPasswords').hide();
+		var userPass = '{"username":"'+currentUser+'","password":"'+password1+'"}';
+
+		var data = JSON.parse(userPass); 
+		$.ajax({
+			url: RUTA_LOCAL+"/updatePassword", 
+			headers: {"Authorization": token},
+			type: "POST",
+			data: data,
+			dataType: "json",
+		}).done(function (data) {
+			console.log(data);
+		}).fail(function (msg) {
+			console.log(msg);
+		});
+	}else {
+		$('#errorPasswords').show();
+	}
 }
 
 function saveImage () {
