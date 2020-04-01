@@ -9,26 +9,19 @@ var foto;
 
 $(document).ready(function () {
   onFirstStart();
-  $('div.sidenav-overlay').addClass('pantallaOscura');
+  $('#errorPasswords').hide();
+  $('div.sidenav-overlay').addClass("pantallaOscura");
   $('.sidenav').sidenav();
   // handling click event on slideMenu
-  $('.botones').click(function (e) {
-    openPage(e);
-  });
-
+  $('.botones').click(function (e) { openPage(e) });
   // handling click event on settings panel to make the logOut
-  $('.settingsButtons').click(function (e) {
-    openPage(e);
-  });
-
+  $('.settingsButtons').click(function (e) { openPage(e) });
   // handling click event on image, calling function input hided type file (select photo)
-  $('body').on('click', 'img#profileImage', function () {
-    $('#fileUpload').click();
-  });
+  $('body').on('click', 'img#profileImage', function () { $('#fileUpload').click() });
 
-  $('#btnConfirm').click(function () {
-    saveImage();
-  });
+  $("#btnConfirm").click(function () { changePassword(), saveImage() });
+
+  $('ul.li').click(alert('UEIOOOOO'));
 });
 
 function onFirstStart() {
@@ -82,6 +75,31 @@ function checkImageSelected() {
   });
 }
 
+function changePassword() {
+  password1 = $('#inputPass').val();
+  password2 = $('#inputPass2').val();
+
+  if (password1 == password2) {
+    $('#errorPasswords').hide();
+    var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '"}';
+
+    var data = JSON.parse(userPass);
+    $.ajax({
+      url: RUTA_LOCAL + "/updatePassword",
+      headers: { "Authorization": token },
+      type: "POST",
+      data: data,
+      dataType: "json",
+    }).done(function (data) {
+      console.log(data);
+    }).fail(function (msg) {
+      console.log(msg);
+    });
+  } else {
+    $('#errorPasswords').show();
+  }
+}
+
 function saveImage() {
   var form = $('#profileForm')[0]; // You need to use standard javascript object here
   var formData = new FormData(form);
@@ -108,7 +126,7 @@ function openPage(e) {
   if (id == 'profileButton' && imInPage != 'profilePage') {
     imInPage = "profilePage";
     console.log(imInPage);
-    getUser();
+    getUser(currentUser);
     $('.pages').hide();
     $('#profilePage').show();
     closeMenu();
@@ -190,59 +208,55 @@ function getNews() {
   });
 }
 
-function getUser() {
+function getUser(username) {
   console.log('getting user info');
-  var userName = '{"username":"' + currentUser + '"}';
-  var data = JSON.parse(userName);
-
+  let data = hacerUsernameJson(username);
+  console.log('data: ' + data)
   $.ajax({
     method: "POST",
     headers: { "Authorization": token },
     url: RUTA_LOCAL + "/getUser",
     data: data,
-    dataType: "json",
+    dataType: "json"
   }).done(function (data) {
     insertProfile(data);
-
   }).fail(function (msg) {
-    console.log("ERROR LLAMADA AJAX");
+    console.log("ERROR LLAMADA AJAX" + JSON.stringify(msg));
     M.toast({ html: 'Error en la conexión' })
   });
 }
-function getPhoto() {
-  console.log('getting user photo');
 
+function hacerUsernameJson(nombreUsuairo) {
+  return JSON.parse('{"username":"' + nombreUsuairo + '"}');
+}
+
+function getPhoto(username, manejaData) {
+  console.log('getting user photo');
+  let dades = hacerUsernameJson(username);
+  console.log(JSON.stringify(dades));
   $.ajax({
-    method: "GET",
+    method: "POST",
     headers: { "Authorization": token },
     url: RUTA_LOCAL + "/getPhoto",
-    processData: false,
-    contentType: false
+    data: dades
   }).done(function (data) {
-    //var formData = new FormData(data);
     if (data == "File Not Found") {
       // If user haven't image, load default image
-      console.log("loading default photo");
-      document.getElementById('profileImage').src = "img/defaultProfile.png";
+      console.log("getPhoto: returning default photo");
+      manejaData("img/defaultProfile.png");
     }
     else {
-      /*console.log(data);
-      var binaryData = [];
-      binaryData.push(data);
-      var blob = new Blob(binaryData, {type: 'image/png'});
-      var reader = new FileReader();
-      reader.readAsBinaryString(blob);
-      reader.onload = function () {
-        var base64data ='data:image/jpeg;base64,' + btoa(event.target.result);
-               document.querySelector("#profileImage").src = base64data;
-        console.log(base64data);
-      }*/
-      document.querySelector("#profileImage").src = 'data:image/png;base64,' + data;
+      //console.log('getPhoto devolviendo: ' + data)
+      manejaData(data);
     }
   }).fail(function (msg) {
-    console.log("ERROR LLAMADA AJAX");
+    console.log("ERROR LLAMADA AJAX" + JSON.stringify(msg));
     M.toast({ html: 'Error en la conexión' })
   });
+}
+
+function cargarFotoUserProfile(foto) {
+  document.getElementById('profileImage').src = foto;
 }
 
 function getOffers() {
@@ -272,8 +286,16 @@ function insertOffers(datos) {
 function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    console.log(datos[i].publisher.username);
-    $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">' + '#' + datos[i].number + ' ' + datos[i].description + ' de ' + datos[i].schedule[0].hour_start + 'H a ' + datos[i].schedule[0].hour_end + 'H </span><button class="waves-effect waves-light btn" type="button">Click Me!</button></li>');
+    let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour =  datos[i].schedule[0].hour_end;
+
+    getPhoto(datos[i].publisher.username, function (foto) {
+      photo = foto;
+      if (photo == null)  {
+        photo = "img/image14.png"; 
+        console.log('predeterminando foto');
+      }
+      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src= '+photo+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' +scheduleEndHour + 'H </span></li>');
+    });
   }
 }
 
@@ -281,7 +303,10 @@ function insertProfile(datos) {
   $('#profileImageDiv').empty();
   $('#profileImageDiv').append('<img id="profileImage" src="img/defaultProfile.png" class="circle imageProfile"/> <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" id="fileUpload" style="display: none"/>');
   checkImageSelected();
-  getPhoto();
+  console.log('pre-getPhoto: ' + currentUser)
+  getPhoto(currentUser, function (foto) {
+    cargarFotoUserProfile(foto);
+  });
   $('#profileNameDiv').empty();
   $('#profileNameDiv').append('<b>Name: </b>' + datos.name);
   $('#profileLastNameDiv').empty();
