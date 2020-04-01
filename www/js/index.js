@@ -2,7 +2,7 @@ var token;
 var email;
 
 var RUTA_HEROKU = "https://app-intercruises.herokuapp.com";
-var RUTA_LOCAL = "http://localhost:3000";
+var RUTA_LOCAL = "http://localhost:8000";
 var token = localStorage.getItem("token");
 
 $(document).ready(function(){
@@ -64,13 +64,6 @@ var app = {
                     $('.errorLogin').hide();
                     $('#errorEmailPass').show();
                 }
-                // if we incorpore mail checking :
-                /*else if(!$("#inputEmail").val().includes('@')&&!$("#inputEmail").val().includes('.')){
-                    console.log("Email invalido");
-                    $('.errorLogin').hide();
-                    $('#errorEmail').show();
-
-                }*/
                 else if($("#inputEmail").val()==""){
                     console.log("Email invalido");
                     $('.errorLogin').hide();

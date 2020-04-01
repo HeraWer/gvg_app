@@ -9,6 +9,12 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.govago.movil"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.govago.movil"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.govago.movil"
     }
   },
   "dependent_plugins": {}
