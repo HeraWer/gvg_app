@@ -20,9 +20,18 @@ $(document).ready(function () {
   $('body').on('click', 'img#profileImage', function () { $('#fileUpload').click() });
 
   $("#btnConfirm").click(function () { changePassword(), saveImage() });
-
-  $('ul.li').click(alert('UEIOOOOO'));
+  $(document).on('click', '.liListener', function() {
+    siONo();
+  });
 });
+
+function siONo() {
+  if(confirm('teteeeee tiene un porrilooooo')) {
+    console.log('VAMO A HASE UN PORROOOOO')
+  } else {
+    console.log('LELELELELELLELE')
+  }
+}
 
 function onFirstStart() {
   checkToken();
@@ -201,7 +210,7 @@ function getNews() {
   }).done(function (data) {
     console.log(data);
     insertNews(data);
-
+    
   }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX");
     M.toast({ html: 'Error en la conexion' })
@@ -230,7 +239,7 @@ function hacerUsernameJson(nombreUsuairo) {
   return JSON.parse('{"username":"' + nombreUsuairo + '"}');
 }
 
-function getPhoto(username, manejaData) {
+async function getPhoto(username, manejaData) {
   console.log('getting user photo');
   let dades = hacerUsernameJson(username);
   console.log(JSON.stringify(dades));
@@ -283,7 +292,7 @@ function insertOffers(datos) {
   }
 }
 
-function insertNews(datos) {
+async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
     let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour =  datos[i].schedule[0].hour_end;
@@ -294,9 +303,11 @@ function insertNews(datos) {
         photo = "img/image14.png"; 
         console.log('predeterminando foto');
       }
-      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src= '+photo+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' +scheduleEndHour + 'H </span></li>');
+      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= '+photo+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' +scheduleEndHour + 'H </span></li>');
     });
+    
   }
+  
 }
 
 function insertProfile(datos) {
