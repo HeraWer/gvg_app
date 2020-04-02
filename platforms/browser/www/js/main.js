@@ -20,17 +20,40 @@ $(document).ready(function () {
   $('body').on('click', 'img#profileImage', function () { $('#fileUpload').click() });
 
   $("#btnConfirm").click(function () { changePassword(), saveImage() });
-  $(document).on('click', '.liListener', function() {
-    siONo();
+  $(document).on('click', '.liListener', function(e) {
+    siONo(e);
   });
 });
 
-function siONo() {
+function siONo(element) {
   if(confirm('teteeeee tiene un porrilooooo')) {
-    console.log('VAMO A HASE UN PORROOOOO')
+    let lel = $(element.target).text().substring(1,3);
+    getUser(currentUser, function(user) {
+      apuntameEvento(lel,user);
+    });
   } else {
-    console.log('LELELELELELLELE')
+    console.log('LELELELELELLELE');
   }
+}
+
+function apuntameEvento(numeroEvento, user) {
+  let userrr = JSON.stringify(user);
+
+  let lel = JSON.parse('{"number":"' + numeroEvento + '", "user": ['+ userrr+']}');
+  console.log(lel);
+
+  $.ajax({
+    url: RUTA_LOCAL + "/apuntarseAEvent",
+    headers: {
+      "Authorization": token
+    },
+    type: "POST",
+    data: lel
+  }).done(function (data) {
+    alert('Has sigut apuntat a aquesta oferta!');
+  }).fail(function (msg) {
+    alert('No has sigut apuntat a aquesta oferta :(')
+  });
 }
 
 function onFirstStart() {
@@ -135,7 +158,9 @@ function openPage(e) {
   if (id == 'profileButton' && imInPage != 'profilePage') {
     imInPage = "profilePage";
     console.log(imInPage);
-    getUser(currentUser);
+    getUser(currentUser, function(datos) {
+      insertProfile(datos);
+    });
     $('.pages').hide();
     $('#profilePage').show();
     closeMenu();
@@ -217,7 +242,7 @@ function getNews() {
   });
 }
 
-function getUser(username) {
+function getUser(username, manejaData) {
   console.log('getting user info');
   let data = hacerUsernameJson(username);
   console.log('data: ' + data)
@@ -228,7 +253,7 @@ function getUser(username) {
     data: data,
     dataType: "json"
   }).done(function (data) {
-    insertProfile(data);
+    manejaData(data);
   }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX" + JSON.stringify(msg));
     M.toast({ html: 'Error en la conexión' })
@@ -296,7 +321,7 @@ async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
     let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour =  datos[i].schedule[0].hour_end;
-
+    console.log(datos);
     getPhoto(datos[i].publisher.username, function (foto) {
       photo = foto;
       if (photo == null)  {
