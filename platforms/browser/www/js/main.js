@@ -27,9 +27,9 @@ $(document).ready(function () {
 
 function siONo() {
   if(confirm('teteeeee tiene un porrilooooo')) {
-    console.log('VAMO A HASE UN PORROOOOO')
+    console.log($t(this));
   } else {
-    console.log('LELELELELELLELE')
+    console.log('LELELELELELLELE');
   }
 }
 
@@ -49,6 +49,7 @@ function onFirstStart() {
 }
 
 function checkToken() {
+  let data = JSON.parse('{"username":"' + currentUser + '"}');
   console.log('checking token');
   $.ajax({
     url: RUTA_LOCAL + "/checkToken",
@@ -56,8 +57,8 @@ function checkToken() {
       "Authorization": token
     },
     type: "POST",
-    processData: false,
-    contentType: false
+    data: data,
+    dataType: "json",
   }).done(function (data) {
     if (data.mensaje == 'Token invalido') {
       logOut();
