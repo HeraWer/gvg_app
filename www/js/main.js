@@ -72,6 +72,7 @@ function onFirstStart() {
 }
 
 function checkToken() {
+  let data = JSON.parse('{"username":"' + currentUser + '"}');
   console.log('checking token');
   $.ajax({
     url: RUTA_LOCAL + "/checkToken",
@@ -79,8 +80,8 @@ function checkToken() {
       "Authorization": token
     },
     type: "POST",
-    processData: false,
-    contentType: false
+    data: data,
+    dataType: "json",
   }).done(function (data) {
     if (data.mensaje == 'Token invalido') {
       logOut();

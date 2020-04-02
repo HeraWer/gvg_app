@@ -26,13 +26,13 @@ $(document).ready(function () {
 });
 
 function siONo(element) {
-  if(confirm('teteeeee tiene un porrilooooo')) {
+  if(confirm('Vols apunter-te a la oferta?')) {
     let lel = $(element.target).text().substring(1,3);
     getUser(currentUser, function(user) {
       apuntameEvento(lel,user);
     });
   } else {
-    console.log('LELELELELELLELE');
+    console.log('No has volgut apuntarte a la oferta...');
   }
 }
 
@@ -72,6 +72,7 @@ function onFirstStart() {
 }
 
 function checkToken() {
+  let data = JSON.parse('{"username":"' + currentUser + '"}');
   console.log('checking token');
   $.ajax({
     url: RUTA_LOCAL + "/checkToken",
@@ -79,8 +80,8 @@ function checkToken() {
       "Authorization": token
     },
     type: "POST",
-    processData: false,
-    contentType: false
+    data: data,
+    dataType: "json",
   }).done(function (data) {
     if (data.mensaje == 'Token invalido') {
       logOut();
