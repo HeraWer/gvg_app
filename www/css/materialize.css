@@ -2,6 +2,11 @@
   margin-left: 20% !important;
 
 }
+#errorPasswords {
+  border: 2px solid rgb(255, 99, 71) !important;
+  background-color: rgb(255, 99, 71, 0.5) !important;
+  color: red !important;
+}
 #profilePage {
   text-align: center !important;
 }
