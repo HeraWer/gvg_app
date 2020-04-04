@@ -6,6 +6,7 @@ var currentUser = localStorage.getItem('currentUser');
 var imInPage = 'newsfeedPage';
 var butonVirgin;
 var foto;
+var notifications;
 
 $(document).ready(function () {
   onFirstStart();
@@ -18,18 +19,28 @@ $(document).ready(function () {
   $('.settingsButtons').click(function (e) { openPage(e) });
   // handling click event on image, calling function input hided type file (select photo)
   $('body').on('click', 'img#profileImage', function () { $('#fileUpload').click() });
+  // Manage notifications status with local storage
+  $('#notificationsSwitch').on('click', function () {
+    console.log('--------'+$('#notificationsSwitch').prop('checked'));
+    if ($('#notificationsSwitch').prop('checked')==true) {
+      localStorage.setItem('notificactions', 'on');
+    }
+    else {
+      localStorage.setItem('notificactions', 'off');
+    }
+  });
 
   $("#btnConfirm").click(function () { changePassword(), saveImage() });
-  $(document).on('click', '.liListener', function(e) {
+  $(document).on('click', '.liListener', function (e) {
     siONo(e);
   });
 });
 
 function siONo(element) {
-  if(confirm('Vols apunter-te a la oferta?')) {
-    let lel = $(element.target).text().substring(1,3);
-    getUser(currentUser, function(user) {
-      apuntameEvento(lel,user);
+  if (confirm('Vols apunter-te a la oferta?')) {
+    let lel = $(element.target).text().substring(1, 3);
+    getUser(currentUser, function (user) {
+      apuntameEvento(lel, user);
     });
   } else {
     console.log('No has volgut apuntarte a la oferta...');
@@ -39,7 +50,7 @@ function siONo(element) {
 function apuntameEvento(numeroEvento, user) {
   let userrr = JSON.stringify(user);
 
-  let lel = JSON.parse('{"number":"' + numeroEvento + '", "user": ['+ userrr+']}');
+  let lel = JSON.parse('{"number":"' + numeroEvento + '", "user": [' + userrr + ']}');
   console.log(lel);
 
   $.ajax({
@@ -68,6 +79,13 @@ function onFirstStart() {
     getNews();
   } else {
     console.log("token false");
+  }
+  notifications=localStorage.getItem('notifications');
+  if(notifications=='on'){
+    $('#notificationsSwitch').prop('checked',true);
+  }
+  else {
+    $('#notificationsSwitch').prop('checked',false);
   }
 }
 
@@ -112,7 +130,7 @@ function changePassword() {
   password1 = $('#inputPass').val();
   password2 = $('#inputPass2').val();
 
-  if (password1 == password2) {
+  if (password1 == password2 && password1 != "" && password2 != "") {
     $('#errorPasswords').hide();
     var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '"}';
 
@@ -125,6 +143,18 @@ function changePassword() {
       dataType: "json",
     }).done(function (data) {
       console.log(data);
+      M.toast({ html: "Success !" });
+      setTimeout(() => {
+        imInPage = "newsFeedPage";
+        console.log(imInPage);
+        getUser(currentUser, function (datos) {
+          insertProfile(datos);
+        });
+        $('.pages').hide();
+        $('#newsfeedPage').show();
+        closeMenu();
+      }, 2000);
+
     }).fail(function (msg) {
       console.log(msg);
     });
@@ -159,7 +189,7 @@ function openPage(e) {
   if (id == 'profileButton' && imInPage != 'profilePage') {
     imInPage = "profilePage";
     console.log(imInPage);
-    getUser(currentUser, function(datos) {
+    getUser(currentUser, function (datos) {
       insertProfile(datos);
     });
     $('.pages').hide();
@@ -236,7 +266,7 @@ function getNews() {
   }).done(function (data) {
     console.log(data);
     insertNews(data);
-    
+
   }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX");
     M.toast({ html: 'Error en la conexion' })
@@ -321,19 +351,19 @@ function insertOffers(datos) {
 async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour =  datos[i].schedule[0].hour_end;
+    let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end;
     console.log(datos);
     getPhoto(datos[i].publisher.username, function (foto) {
       photo = foto;
-      if (photo == null)  {
-        photo = "img/image14.png"; 
+      if (photo == null) {
+        photo = "img/image14.png";
         console.log('predeterminando foto');
       }
-      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= '+photo+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' +scheduleEndHour + 'H </span></li>');
+      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= ' + photo + ' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
     });
-    
+
   }
-  
+
 }
 
 function insertProfile(datos) {

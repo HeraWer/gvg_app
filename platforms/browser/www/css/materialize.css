@@ -2,6 +2,13 @@
   margin-left: 20% !important;
 
 }
+#settingsPage img {
+  width: 20% !important;
+  height: 20% !important;
+}
+#settingsPage .switch {
+  margin-left: 10px !important;
+}
 #errorPasswords {
   border: 2px solid rgb(255, 99, 71) !important;
   background-color: rgb(255, 99, 71, 0.5) !important;
