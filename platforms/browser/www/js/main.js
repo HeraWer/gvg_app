@@ -19,10 +19,9 @@ $(document).ready(function () {
   $('.settingsButtons').click(function (e) { openPage(e) });
   // handling click event on image, calling function input hided type file (select photo)
   $('body').on('click', 'img#profileImage', function () { $('#fileUpload').click() });
-  // Manage notifications status with local storage
+  // Manage notifications status with local storage (TO IMPLEMENT: store value into db because localStorage is not persistent)
   $('#notificationsSwitch').on('click', function () {
-    console.log('--------'+$('#notificationsSwitch').prop('checked'));
-    if ($('#notificationsSwitch').prop('checked')==true) {
+    if ($('#notificationsSwitch').prop('checked') == true) {
       localStorage.setItem('notificactions', 'on');
     }
     else {
@@ -30,11 +29,24 @@ $(document).ready(function () {
     }
   });
 
-  $("#btnConfirm").click(function () { changePassword(), saveImage() });
+  $("#btnConfirm").click(function () {
+    saveImage(), function () {
+      if (!checkPasswordsEmpty) changePassword(); M.toast({ html: "Success !" });
+    }
+  });
   $(document).on('click', '.liListener', function (e) {
     siONo(e);
   });
 });
+
+function checkPasswordsEmpty() {
+  if ($('#inputPass') != "" && $('#inputPass2') != "") {
+    return false;
+  }
+  else {
+    return true;
+  }
+}
 
 function siONo(element) {
   if (confirm('Vols apunter-te a la oferta?')) {
@@ -80,12 +92,12 @@ function onFirstStart() {
   } else {
     console.log("token false");
   }
-  notifications=localStorage.getItem('notifications');
-  if(notifications=='on'){
-    $('#notificationsSwitch').prop('checked',true);
+  notifications = localStorage.getItem('notifications');
+  if (notifications == 'on') {
+    $('#notificationsSwitch').prop('checked', true);
   }
   else {
-    $('#notificationsSwitch').prop('checked',false);
+    $('#notificationsSwitch').prop('checked', false);
   }
 }
 
@@ -130,7 +142,7 @@ function changePassword() {
   password1 = $('#inputPass').val();
   password2 = $('#inputPass2').val();
 
-  if (password1 == password2 && password1 != "" && password2 != "") {
+  if (password1 == password2) {
     $('#errorPasswords').hide();
     var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '"}';
 
@@ -234,6 +246,7 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'logOut') {
+    console.log("logging out..");
     logOut();
   }
 }
