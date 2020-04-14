@@ -20,7 +20,6 @@
 #profileImageDiv img#profileImage{
   height: 50%;
   width: 50%;
-  /*max-width: ;*/
   max-height: 145px;
 }
 @media (min-width: 300px) and (max-width: 425px) {
