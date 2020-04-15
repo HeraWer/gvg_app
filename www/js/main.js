@@ -65,6 +65,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  getUser_Id(function(d) {
+    getUserEvents(d, function(de) {
+      localStorage.setItem('eventosUsuario', JSON.stringify(de));
+    });
+  });
+
+  let lel = JSON.parse(localStorage.getItem('eventosUsuario'));
+  let userEvents = [];
+
+
+  for(let i = 0; i < lel.length ; i++) {
+
+    let descripciooo = lel[i].description;
+
+    for(let q = 0 ; q < lel[i].schedule.length ; q++) {
+      let dia = lel[i].schedule[q];
+      descripciooo += '\n' + dia.day + ': ' + dia.hour_start + ' - ' + dia.hour_end;
+    }
+  
+    let newEvent = {
+      'title' : descripciooo,
+      'description' : descripciooo,
+      'start' : lel[0].schedule[0].day,
+      'end' : lel[lel.length-1].schedule[lel.length-1].day
+    }
+    userEvents.push(newEvent);
+  }
+
+  console.log('userEvents: ' + JSON.stringify(userEvents));
+
   var calendar = new FullCalendar.Calendar(calendarEl, {
     plugins: ['interaction', 'dayGrid', 'timeGrid'],
     header: {
@@ -90,66 +120,13 @@ document.addEventListener('DOMContentLoaded', function () {
     },
     editable: true,
     eventLimit: true, // allow "more" link when too many events
-    events: [
-      {
-        title: 'All Day Event',
-        start: '2020-02-01'
-      },
-      {
-        title: 'Long Event',
-        start: '2020-02-07',
-        end: '2020-02-10'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2020-02-09T16:00:00'
-      },
-      {
-        groupId: 999,
-        title: 'Repeating Event',
-        start: '2020-02-16T16:00:00'
-      },
-      {
-        title: 'Conference',
-        start: '2020-02-11',
-        end: '2020-02-13'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-02-12T10:30:00',
-        end: '2020-02-12T12:30:00'
-      },
-      {
-        title: 'Lunch',
-        start: '2020-02-12T12:00:00'
-      },
-      {
-        title: 'Meeting',
-        start: '2020-02-12T14:30:00'
-      },
-      {
-        title: 'Happy Hour',
-        start: '2020-02-12T17:30:00'
-      },
-      {
-        title: 'Dinner',
-        start: '2020-02-12T20:00:00'
-      },
-      {
-        title: 'Birthday Party',
-        start: '2020-02-13T07:00:00'
-      },
-      {
-        title: 'Click for Google',
-        url: 'http://google.com/',
-        start: '2020-02-28'
-      }
-    ]
+    events: userEvents,
+    eventRender: function(info) {
+      $('.parent').attr('data-tooltip', info.event.extendedProps.description);
+    }
   });
-
+  
   calendar.render();
-
 });
 
 
@@ -362,9 +339,12 @@ function openPage(e) {
   else if (id == 'calendarButton' && imInPage != 'calendarPage') {
     imInPage = "calendarPage";
     console.log(imInPage);
+    getUserEventsJunt();
     $('.pages').hide();
     $('#calendarPage').show();
     closeMenu();
+    $('.fc_title').tooltip();
+    $('.fc_title').addClass('tooltipped');
   }
   else if (id == 'logOut') {
     console.log("logging out..");
@@ -458,6 +438,47 @@ function cargarFotoUserProfile(foto) {
   document.getElementById('profileImage').src = foto;
 }
 
+function getUserEventsJunt() {
+  getUser_Id(function(d) {
+    console.log(d);
+  });
+}
+
+function getUser_Id(manejaData) {
+  let dades = JSON.parse('{"username":"' + currentUser + '"}');
+  console.log(dades);
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/getUser_Id",
+    dataType: "json",
+    data: dades
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  });
+}
+
+function getUserEvents(userId, manejaData) {
+  let data = JSON.parse('{"_id":"' + userId + '"}');
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    data: data,
+    url: RUTA_LOCAL + "/getUserEvents",
+    dataType: "json",
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  }).then(function (data) {
+    
+  });
+}
+
 function getOffers() {
   console.log('getting offers');
   $.ajax({
@@ -517,3 +538,4 @@ function insertProfile(datos) {
   $('#inputAddress').empty();
   $('#inputAddress').val(datos.location.address);
 }
+
