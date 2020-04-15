@@ -23,16 +23,31 @@ $(document).ready(function () {
   // Manage notifications status with local storage (TO IMPLEMENT: store value into db because localStorage is not persistent)
   $('#notificationsSwitch').on('click', function () {
     if ($('#notificationsSwitch').prop('checked') == true) {
-      localStorage.setItem('notificactions', 'on');
+    
+      var notification = true;
+      var updateUserNotification = '{"username":"' + currentUser + '","notifications":"' + notification + '"}';
+
     }
     else {
-      localStorage.setItem('notificactions', 'off');
+
+      var notification = false;
+      var updateUserNotification = '{"username":"' + currentUser + '","notifications":"' + notification + '"}';
     }
+
+    var data = JSON.parse(updateUserNotification);
+    $.ajax({
+      url: RUTA_LOCAL + "/updateNotifications",
+      headers: { "Authorization": token },
+      type: "POST",
+      data: data,
+      dataType: "json"
+    });
+
   });
 
   $("#btnConfirm").click(function () {
-    saveImage(), 
-      changePassword(); M.toast({ html: "Success !" });
+    saveImage();
+    changePassword();
   });
   $(document).on('click', '.liListener', function (e) {
     siONo(e);
@@ -241,10 +256,15 @@ function changePassword() {
   password1 = $('#inputPass').val();
   password2 = $('#inputPass2').val();
   address = $('#inputAddress').val();
+  passwordUndefined = "sindefinir"
 
-  if (password1 == password2) {
+  if (password1 == password2 && password1!="" && password2!="") {
     $('#errorPasswords').hide();
     var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '","address":"' + address + '"}';
+    } else {
+      var userPass = '{"username":"' + currentUser + '","password":"' + passwordUndefined + '","address":"' + address + '"}';
+    $('#errorPasswords').show();
+  }
 
     var data = JSON.parse(userPass);
     $.ajax({
@@ -270,9 +290,6 @@ function changePassword() {
     }).fail(function (msg) {
       console.log(msg);
     });
-  } else {
-    $('#errorPasswords').show();
-  }
 }
 
 function saveImage() {
@@ -317,6 +334,10 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'settingsButton' && imInPage != 'settingsPage') {
+    getUser(currentUser, function (datos){
+      console.log(datos["notifications"]);
+      $('#notificationsSwitch').prop('checked', datos["notifications"]);
+    })
     imInPage = "settingsPage";
     console.log(imInPage);
     $('.pages').hide();
