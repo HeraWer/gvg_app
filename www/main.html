@@ -4,10 +4,21 @@
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
+  <link href='fullcalendar/core/main.css' rel='stylesheet' />
+  <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
+  <link href='fullcalendar/timegrid/main.css' rel='stylesheet' />
+  <link href='fullcalendar/list/main.css' rel='stylesheet' />
+  <link href='fullcalendar/timeline/main.css' rel='stylesheet' />
   <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
   <script src="js/materialize.min.js"></script>
   <script src="js/main.js"></script>
+  <script src='fullcalendar/core/main.js'></script>
+  <script src='fullcalendar/daygrid/main.js'></script>
+  <script src='fullcalendar/timegrid/main.js'></script>
+  <script src='fullcalendar/list/main.js'></script>
+  <script src='fullcalendar/timeline/main.js'></script>
+  <script src='fullcalendar/interaction/main.js'></script>
 
   <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 </head>
@@ -42,6 +53,7 @@
   </div>
   <!-- Fin Menu SideNav --->
 
+  <!-- Noticias -->
   <div id="newsfeedPage" class="pages">
     <ul class="collection newsFeedCollection">
 
@@ -49,6 +61,7 @@
   </div>
   <div class="secondaryPages">
 
+    <!-- Perfil Usuario-->
     <div id="profilePage" class="pages">
       <div class="col s12 z-depth-6 card-panel card">
         <form id="profileForm" action="/setPhoto" enctype="multipart/form-data" class="col s12" method="post">
@@ -65,20 +78,26 @@
 
           </div>
           <div class="row">
-            <div class="input-field col s6 login">
+            <div class="input-field col s4 login">
+              <input id="inputAddress" type="text" class="validate">
+              <label id="labelAddress" for="Address">Address</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s4 login">
               <input id="inputPass" type="password" class="validate">
               <label for="Password">Password</label>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6 login">
+            <div class="input-field col s4 login">
               <input id="inputPass2" type="password" class="validate">
               <label for="Confirm password">Confirm password</label>
             </div>
           </div>
           <div class="row">
             <div id="errorPasswords" class="card-panel card">
-              Error - Passwords doesn't match or are empty 
+              Error - Passwords doesn't match or are empty
             </div>
           </div>
           <div class="row">
@@ -111,19 +130,19 @@
             </label>
           </div>
         </li>
-        <li id="adminUsers" class="collection-item avatar waves-effect waves-light settingsButtons"><img src="img/adminUsers.png"><span
-            class="title">Manage Users</span></li>
+        <li id="adminUsers" class="collection-item avatar waves-effect waves-light settingsButtons"><img
+            src="img/adminUsers.png"><span class="title">Manage Users</span></li>
         </li>
-        <li id="help" class="collection-item avatar waves-effect waves-light settingsButtons"><img src="img/help.png"><span
-            class="title">Help</span></li>
+        <li id="help" class="collection-item avatar waves-effect waves-light settingsButtons"><img
+            src="img/help.png"><span class="title">Help</span></li>
         </li>
-        <li id="logOut" class="collection-item avatar waves-effect waves-light settingsButtons"><img src="img/logOut.png"><span
-            class="title">Log Out</span></li>
+        <li id="logOut" class="collection-item avatar waves-effect waves-light settingsButtons"><img
+            src="img/logOut.png"><span class="title">Log Out</span></li>
       </ul>
     </div>
 
-    <div id="calendarPage" class="pages">
-      calendar
+    <div id="calendarPage" class="pages" style="background-color: white;">
+      <div id='calendar'></div>
     </div>
 
   </div>

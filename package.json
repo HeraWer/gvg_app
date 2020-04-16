@@ -13,6 +13,12 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
+    "@fullcalendar/core": "^4.4.0",
+    "@fullcalendar/daygrid": "^4.4.0",
+    "@fullcalendar/interaction": "^4.4.0",
+    "@fullcalendar/list": "^4.4.0",
+    "@fullcalendar/timegrid": "^4.4.0",
+    "@fullcalendar/timeline": "^4.4.0",
     "cordova": "^9.0.0",
     "cordova-browser": "^6.0.0",
     "cordova-plugin-file": "^6.0.2",

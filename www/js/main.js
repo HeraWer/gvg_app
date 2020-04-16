@@ -10,6 +10,7 @@ var notifications;
 
 $(document).ready(function () {
   onFirstStart();
+  $('#labelAddress').addClass('active');
   $('#errorPasswords').hide();
   $('div.sidenav-overlay').addClass("pantallaOscura");
   $('.sidenav').sidenav();
@@ -22,21 +23,112 @@ $(document).ready(function () {
   // Manage notifications status with local storage (TO IMPLEMENT: store value into db because localStorage is not persistent)
   $('#notificationsSwitch').on('click', function () {
     if ($('#notificationsSwitch').prop('checked') == true) {
-      localStorage.setItem('notificactions', 'on');
+    
+      var notification = true;
+      var updateUserNotification = '{"username":"' + currentUser + '","notifications":"' + notification + '"}';
+
     }
     else {
-      localStorage.setItem('notificactions', 'off');
+
+      var notification = false;
+      var updateUserNotification = '{"username":"' + currentUser + '","notifications":"' + notification + '"}';
     }
+
+    var data = JSON.parse(updateUserNotification);
+    $.ajax({
+      url: RUTA_LOCAL + "/updateNotifications",
+      headers: { "Authorization": token },
+      type: "POST",
+      data: data,
+      dataType: "json"
+    });
+
   });
 
   $("#btnConfirm").click(function () {
-    saveImage(); 
-    changePassword(); 
+    saveImage();
+    changePassword();
   });
   $(document).on('click', '.liListener', function (e) {
     siONo(e);
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  var calendarEl = document.getElementById('calendar');
+  /* Create function to initialize the correct view */
+  function mobileCheck() {
+    if (window.innerWidth >= 768) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  getUser_Id(function(d) {
+    getUserEvents(d, function(de) {
+      localStorage.setItem('eventosUsuario', JSON.stringify(de));
+    });
+  });
+
+  let lel = JSON.parse(localStorage.getItem('eventosUsuario'));
+  let userEvents = [];
+
+
+  for(let i = 0; i < lel.length ; i++) {
+
+    let descripciooo = lel[i].description;
+
+    for(let q = 0 ; q < lel[i].schedule.length ; q++) {
+      let dia = lel[i].schedule[q];
+      descripciooo += '\n' + dia.day + ': ' + dia.hour_start + ' - ' + dia.hour_end;
+    }
+  
+    let newEvent = {
+      'title' : descripciooo,
+      'description' : descripciooo,
+      'start' : lel[0].schedule[0].day,
+      'end' : lel[lel.length-1].schedule[lel.length-1].day
+    }
+    userEvents.push(newEvent);
+  }
+
+  console.log('userEvents: ' + JSON.stringify(userEvents));
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    plugins: ['interaction', 'dayGrid', 'timeGrid'],
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    defaultDate: '2020-02-12',
+    navLinks: true, // can click day/week names to navigate views
+    selectable: true,
+    selectMirror: true,
+    select: function (arg) {
+      var title = prompt('Event Title:');
+      if (title) {
+        calendar.addEvent({
+          title: title,
+          start: arg.start,
+          end: arg.end,
+          allDay: arg.allDay
+        })
+      }
+      calendar.unselect()
+    },
+    editable: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: userEvents,
+    eventRender: function(info) {
+      $('.parent').attr('data-tooltip', info.event.extendedProps.description);
+    }
+  });
+  
+  calendar.render();
+});
+
 
 function checkPasswordsEmpty() {
   if ($('#inputPass') != "" && $('#inputPass2') != "") {
@@ -140,10 +232,16 @@ function checkImageSelected() {
 function changePassword() {
   password1 = $('#inputPass').val();
   password2 = $('#inputPass2').val();
+  address = $('#inputAddress').val();
+  passwordUndefined = "sindefinir"
 
   if (password1 == password2 && password1!="" && password2!="") {
     $('#errorPasswords').hide();
-    var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '"}';
+    var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '","address":"' + address + '"}';
+    } else {
+      var userPass = '{"username":"' + currentUser + '","password":"' + passwordUndefined + '","address":"' + address + '"}';
+    $('#errorPasswords').show();
+  }
 
     var data = JSON.parse(userPass);
     $.ajax({
@@ -169,9 +267,6 @@ function changePassword() {
     }).fail(function (msg) {
       console.log(msg);
     });
-  } else {
-    $('#errorPasswords').show();
-  }
 }
 
 function saveImage() {
@@ -216,6 +311,10 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'settingsButton' && imInPage != 'settingsPage') {
+    getUser(currentUser, function (datos){
+      console.log(datos["notifications"]);
+      $('#notificationsSwitch').prop('checked', datos["notifications"]);
+    })
     imInPage = "settingsPage";
     console.log(imInPage);
     $('.pages').hide();
@@ -240,9 +339,12 @@ function openPage(e) {
   else if (id == 'calendarButton' && imInPage != 'calendarPage') {
     imInPage = "calendarPage";
     console.log(imInPage);
+    getUserEventsJunt();
     $('.pages').hide();
     $('#calendarPage').show();
     closeMenu();
+    $('.fc_title').tooltip();
+    $('.fc_title').addClass('tooltipped');
   }
   else if (id == 'logOut') {
     console.log("logging out..");
@@ -336,6 +438,47 @@ function cargarFotoUserProfile(foto) {
   document.getElementById('profileImage').src = foto;
 }
 
+function getUserEventsJunt() {
+  getUser_Id(function(d) {
+    console.log(d);
+  });
+}
+
+function getUser_Id(manejaData) {
+  let dades = JSON.parse('{"username":"' + currentUser + '"}');
+  console.log(dades);
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/getUser_Id",
+    dataType: "json",
+    data: dades
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  });
+}
+
+function getUserEvents(userId, manejaData) {
+  let data = JSON.parse('{"_id":"' + userId + '"}');
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    data: data,
+    url: RUTA_LOCAL + "/getUserEvents",
+    dataType: "json",
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  }).then(function (data) {
+    
+  });
+}
+
 function getOffers() {
   console.log('getting offers');
   $.ajax({
@@ -392,4 +535,7 @@ function insertProfile(datos) {
   $('#profileLastNameDiv').append('<b>Last Name: </b>' + datos.lastname);
   $('#profileUserDiv').empty();
   $('#profileUserDiv').append('<b>Username: </b>' + datos.username);
+  $('#inputAddress').empty();
+  $('#inputAddress').val(datos.location.address);
 }
+
