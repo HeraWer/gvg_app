@@ -3,6 +3,8 @@
 
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0DpVuNL4eQHxxDsQ8M0rEHAt4PbfyTm8&callback=initMap"
+        async defer></script>
   <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
   <link href='fullcalendar/core/main.css' rel='stylesheet' />
   <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
@@ -19,6 +21,7 @@
   <script src='fullcalendar/list/main.js'></script>
   <script src='fullcalendar/timeline/main.js'></script>
   <script src='fullcalendar/interaction/main.js'></script>
+  
 
   <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 
@@ -117,7 +120,7 @@
     </div>
 
     <div id="mapPage" class="pages">
-      map
+      <div id="map"></div>
     </div>
 
     <div id="settingsPage" class="pages">
