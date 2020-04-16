@@ -329,10 +329,9 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'mapButton' && imInPage != 'mapFeedPage') {
-    imInPage = "map";
-    initMap();
+    imInPage = "mapId";
     $('.pages').hide();
-    $('#map').show();
+    $('#mapId').show();
     closeMenu();
   }
   else if (id == 'jobsButton' && imInPage != 'jobsPage') {
@@ -479,7 +478,7 @@ function getUserOffersJunt() {
 }
 
 function getUserById(d,flag) {
-  let dades = JSON.parse('{"_id":"' + d.replaceAll('\\','') + '"}');
+  let dades = JSON.parse('{"_id":"' + d + '"}');
   $.ajax({
     method: "POST",
     headers: { "Authorization": token },
@@ -679,16 +678,10 @@ function getAllUsers(manejaData){
 }
 
 function initMap(){
-  console.log('se inicia el mapa');
-  var coord = {lat:-34.5956145 ,lng: -58.4431949};
-  var map = new google.maps.Map(document.getElementById('map'),{
-    zoom: 10,
-    center: coord
+  map = new google.maps.Map(document.getElementById('mapId'), {
+    center: {lat: 42.565526, lng: -2.924289},
+    zoom: 8
   });
-  console.log(map);
-  /*var marker = new google.maps.Marker({
-    position: coord,
-    map: map
-  });*/
+
 }
 
