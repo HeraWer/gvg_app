@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
       'title' : descripciooo,
       'description' : descripciooo,
       'start' : lel[0].schedule[0].day,
-      'end' : lel[lel.length-1].schedule[lel.length-1].day
+      'end' : lel[lel.length-1].schedule[lel.schedule.length-1].day
     }
     userEvents.push(newEvent);
   }
