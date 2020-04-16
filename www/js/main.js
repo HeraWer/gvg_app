@@ -7,6 +7,8 @@ var imInPage = 'newsfeedPage';
 var butonVirgin;
 var foto;
 var notifications;
+var number,description,scheduleStartHour,scheduleEndHour,publisher;
+
 
 $(document).ready(function () {
   onFirstStart();
@@ -23,7 +25,7 @@ $(document).ready(function () {
   // Manage notifications status with local storage (TO IMPLEMENT: store value into db because localStorage is not persistent)
   $('#notificationsSwitch').on('click', function () {
     if ($('#notificationsSwitch').prop('checked') == true) {
-    
+
       var notification = true;
       var updateUserNotification = '{"username":"' + currentUser + '","notifications":"' + notification + '"}';
 
@@ -65,9 +67,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  getUser_Id(function(d) {
-    getUserEvents(d, function(de) {
+  getUser_Id(function (d) {
+    getUserEvents(d, function (de) {
       localStorage.setItem('eventosUsuario', JSON.stringify(de));
+    });
+  });
+  getUserJobs_Id(function (d) {
+    getUserOffers(d, function (de) {
+      localStorage.setItem('jobsUsuario', JSON.stringify(de));
     });
   });
 
@@ -75,20 +82,20 @@ document.addEventListener('DOMContentLoaded', function () {
   let userEvents = [];
 
 
-  for(let i = 0; i < lel.length ; i++) {
+  for (let i = 0; i < lel.length; i++) {
 
     let descripciooo = lel[i].description;
 
-    for(let q = 0 ; q < lel[i].schedule.length ; q++) {
+    for (let q = 0; q < lel[i].schedule.length; q++) {
       let dia = lel[i].schedule[q];
       descripciooo += '\n' + dia.day + ': ' + dia.hour_start + ' - ' + dia.hour_end;
     }
-  
+
     let newEvent = {
-      'title' : descripciooo,
-      'description' : descripciooo,
-      'start' : lel[0].schedule[0].day,
-      'end' : lel[lel.length-1].schedule[lel.length-1].day
+      'title': descripciooo,
+      'description': descripciooo,
+      'start': lel[i].schedule[0].day,
+      'end': lel[i].schedule[lel[i].schedule.length - 1].day
     }
     userEvents.push(newEvent);
   }
@@ -121,11 +128,11 @@ document.addEventListener('DOMContentLoaded', function () {
     editable: true,
     eventLimit: true, // allow "more" link when too many events
     events: userEvents,
-    eventRender: function(info) {
+    eventRender: function (info) {
       $('.parent').attr('data-tooltip', info.event.extendedProps.description);
     }
   });
-  
+
   calendar.render();
 });
 
@@ -235,38 +242,38 @@ function changePassword() {
   address = $('#inputAddress').val();
   passwordUndefined = "sindefinir"
 
-  if (password1 == password2 && password1!="" && password2!="") {
+  if (password1 == password2 && password1 != "" && password2 != "") {
     $('#errorPasswords').hide();
     var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '","address":"' + address + '"}';
-    } else {
-      var userPass = '{"username":"' + currentUser + '","password":"' + passwordUndefined + '","address":"' + address + '"}';
+  } else {
+    var userPass = '{"username":"' + currentUser + '","password":"' + passwordUndefined + '","address":"' + address + '"}';
     $('#errorPasswords').show();
   }
 
-    var data = JSON.parse(userPass);
-    $.ajax({
-      url: RUTA_LOCAL + "/updatePassword",
-      headers: { "Authorization": token },
-      type: "POST",
-      data: data,
-      dataType: "json",
-    }).done(function (data) {
-      console.log(data);
-      M.toast({ html: "Success !" });
-      setTimeout(() => {
-        imInPage = "newsFeedPage";
-        console.log(imInPage);
-        getUser(currentUser, function (datos) {
-          insertProfile(datos);
-        });
-        $('.pages').hide();
-        $('#newsfeedPage').show();
-        closeMenu();
-      }, 2000);
+  var data = JSON.parse(userPass);
+  $.ajax({
+    url: RUTA_LOCAL + "/updatePassword",
+    headers: { "Authorization": token },
+    type: "POST",
+    data: data,
+    dataType: "json",
+  }).done(function (data) {
+    console.log(data);
+    M.toast({ html: "Success !" });
+    setTimeout(() => {
+      imInPage = "newsFeedPage";
+      console.log(imInPage);
+      getUser(currentUser, function (datos) {
+        insertProfile(datos);
+      });
+      $('.pages').hide();
+      $('#newsfeedPage').show();
+      closeMenu();
+    }, 2000);
 
-    }).fail(function (msg) {
-      console.log(msg);
-    });
+  }).fail(function (msg) {
+    console.log(msg);
+  });
 }
 
 function saveImage() {
@@ -311,7 +318,7 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'settingsButton' && imInPage != 'settingsPage') {
-    getUser(currentUser, function (datos){
+    getUser(currentUser, function (datos) {
       console.log(datos["notifications"]);
       $('#notificationsSwitch').prop('checked', datos["notifications"]);
     })
@@ -332,6 +339,7 @@ function openPage(e) {
     getOffers();
     imInPage = "jobsPage";
     console.log(imInPage);
+    getUserOffersJunt();
     $('.pages').hide();
     $('#jobsPage').show();
     closeMenu();
@@ -345,6 +353,7 @@ function openPage(e) {
     closeMenu();
     $('.fc_title').tooltip();
     $('.fc_title').addClass('tooltipped');
+    $('.fc-today-button').click()
   }
   else if (id == 'logOut') {
     console.log("logging out..");
@@ -378,7 +387,6 @@ function getNews() {
     url: RUTA_LOCAL + "/allEvents",
     dataType: "json",
   }).done(function (data) {
-    console.log(data);
     insertNews(data);
 
   }).fail(function (msg) {
@@ -410,7 +418,6 @@ function hacerUsernameJson(nombreUsuairo) {
 }
 
 async function getPhoto(username, manejaData) {
-  console.log('getting user photo');
   let dades = hacerUsernameJson(username);
   console.log(JSON.stringify(dades));
   $.ajax({
@@ -420,7 +427,7 @@ async function getPhoto(username, manejaData) {
     data: dades
   }).done(function (data) {
     if (data == "File Not Found") {
-      // If user haven't image, load default image
+      // If user hasn't image, load default image
       console.log("getPhoto: returning default photo");
       manejaData("img/defaultProfile.png");
     }
@@ -439,8 +446,35 @@ function cargarFotoUserProfile(foto) {
 }
 
 function getUserEventsJunt() {
-  getUser_Id(function(d) {
+  getUser_Id(function (d) {
     console.log(d);
+  });
+}
+
+function getUserOffersJunt() {
+  getUserJobs_Id(function (d) {
+    console.log(d);
+  });
+}
+
+function getUserById(d,flag) {
+  let dades = JSON.parse('{"_id":"' + d + '"}');
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/getUserById",
+    dataType: "json",
+    data: dades
+  }).done(function (data) {
+    if(flag=="jobOffers"){
+      setPublisherFoto(data,"jobOffers");
+    }else if(flag=="newsFeed"){
+      setPublisherFoto(data,"newsFeed");
+    }
+    console.log("XX" + JSON.stringify(data));
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
   });
 }
 
@@ -451,6 +485,23 @@ function getUser_Id(manejaData) {
     method: "POST",
     headers: { "Authorization": token },
     url: RUTA_LOCAL + "/getUser_Id",
+    dataType: "json",
+    data: dades
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  });
+}
+
+function getUserJobs_Id(manejaData) {
+  let dades = JSON.parse('{"username":"' + currentUser + '"}');
+  console.log(dades);
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/getUserJobs_Id",
     dataType: "json",
     data: dades
   }).done(function (data) {
@@ -475,7 +526,25 @@ function getUserEvents(userId, manejaData) {
     console.log("ERROR LLAMADA AJAX");
     M.toast({ html: 'Error en la conexion' })
   }).then(function (data) {
-    
+
+  });
+}
+
+function getUserOffers(userId, manejaData) {
+  let data = JSON.parse('{"_id":"' + userId + '"}');
+  $.ajax({
+    method: "POST",
+    headers: { "Authorization": token },
+    data: data,
+    url: RUTA_LOCAL + "/getUserOffers",
+    dataType: "json",
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX");
+    M.toast({ html: 'Error en la conexion' })
+  }).then(function (data) {
+
   });
 }
 
@@ -499,26 +568,58 @@ function getOffers() {
 function insertOffers(datos) {
   $('.jobsCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    $('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/image14.png" class="circle"><span class="title">' + '#' + datos[i].number + ' ' + datos[i].description + ' de ' + datos[i].schedule[0].hour_start + 'H a ' + datos[i].schedule[0].hour_end + 'H </span></li>');
+    let publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split('"').join("");
+    console.log("POP " + publisherId);
+    let number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
+    foto = "img/defaultProfile.png";
+    getUserById(publisherId,"jobOffers");
   }
 }
 
 async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    let photo, number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end;
-    console.log(datos);
-    getPhoto(datos[i].publisher.username, function (foto) {
-      photo = foto;
-      if (photo == null) {
-        photo = "img/image14.png";
-        console.log('predeterminando foto');
-      }
-      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= ' + photo + ' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
-    });
-
+    let publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split('"').join("");
+    console.log("POP " + publisherId);
+    number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
+    foto = "img/defaultProfile.png";
+    getUserById(publisherId,"newsFeed");
   }
+}
 
+function setPublisherFoto(data, flag) {
+  console.log("JAJAJA " + JSON.stringify(data));
+  console.log("PUBLISH "+data.username);
+  getPhoto(data.username, function (foto) {
+    if (foto == null&&flag=="newsFeed") {
+      console.log('predeterminando foto');
+      foto = "img/defaultProfile.png";
+      $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= ' + foto + ' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
+    }
+    if (foto == null&&flag=="jobsOffer") {
+      console.log('predeterminando foto');
+      foto = "img/defaultProfile.png";
+      $('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src='+foto+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
+    }
+    else {
+      console.log('FOTO OK');
+      if(flag=="newsFeed") {
+        $('.newsFeedCollection').append('<li class="collection-item avatar waves-effect waves-light liListener"><img src= ' + foto + ' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
+      }
+      else if(flag=="jobOffers") {
+        $('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src='+foto+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
+      }
+    }
+    checkOfferState();
+  });
+}
+function checkOfferState() {
+
+}
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 function insertProfile(datos) {
