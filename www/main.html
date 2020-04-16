@@ -3,6 +3,8 @@
 
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0DpVuNL4eQHxxDsQ8M0rEHAt4PbfyTm8&callback=initMap"
+        async defer></script>
   <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection">
   <link href='fullcalendar/core/main.css' rel='stylesheet' />
   <link href='fullcalendar/daygrid/main.css' rel='stylesheet' />
@@ -19,8 +21,10 @@
   <script src='fullcalendar/list/main.js'></script>
   <script src='fullcalendar/timeline/main.js'></script>
   <script src='fullcalendar/interaction/main.js'></script>
+  
 
   <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+
 </head>
 
 <body class="main_menu">
@@ -111,12 +115,12 @@
     </div>
 
     <div id="jobsPage" class="pages">
-      <ul class="collection jobsCollection">
+      <ul class="collection jobsCollection liListener">
       </ul>
     </div>
 
     <div id="mapPage" class="pages">
-      map
+      <div id="map"></div>
     </div>
 
     <div id="settingsPage" class="pages">
@@ -143,6 +147,17 @@
 
     <div id="calendarPage" class="pages" style="background-color: white;">
       <div id='calendar'></div>
+    </div>
+
+    <div id="helpPage" class="pages" style="background-color: white;">
+      <img src="img/tecnico.png" alt="" style="margin-left: 25%; width: 50%; height: 50%;">
+      <p style="font-size: 16p; text-align: center;"><b>Si esta siendo afectado por problemas de funcionamiento en nuestra App, por favor envie un correo electronico a <a href="mailto:govago.intercruises@gmail.com?Subject=Asistencia tecnica App">govago.intercruises@gmail.com</a></b></p>
+    </div>
+
+    <div id="adminUsersPage" class="pages">
+      <ul id = "listUsers" class="collection">
+      
+      </ul>
     </div>
 
   </div>
