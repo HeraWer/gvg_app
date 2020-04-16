@@ -329,19 +329,8 @@ function openPage(e) {
     closeMenu();
   }
   else if (id == 'mapButton' && imInPage != 'mapFeedPage') {
-    imInPage = "mapPage";
-    console.log(imInPage);
-    var map;
-    function initMap() {
-      console.log("CREO MAPA");
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
-      });
-    }
-    initMap();
+    imInPage = "map";
     $('.pages').hide();
-    $('#mapPage').show();
     $('#map').show();
     closeMenu();
   }
@@ -685,6 +674,18 @@ function getAllUsers(manejaData){
   }).fail(function (msg) {
     console.log("ERROR LLAMADA AJAX" + JSON.stringify(msg));
     M.toast({ html: 'Error en la conexión' })
+  });
+}
+
+function iniciarMap(){
+  var coord = {lat:-34.5956145 ,lng: -58.4431949};
+  var map = new google.maps.Map(document.getElementById('map'),{
+    zoom: 10,
+    center: coord
+  });
+  var marker = new google.maps.Marker({
+    position: coord,
+    map: map
   });
 }
 
