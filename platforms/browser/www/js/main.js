@@ -362,6 +362,27 @@ function openPage(e) {
     console.log("logging out..");
     logOut();
   }
+  else if (id == 'help'){
+    $('#settingsPage').hide();
+    $('#helpPage').show();
+  }
+  else if (id == 'adminUsers') {
+    getUser(currentUser, function (datos){
+      if(datos["role"]["role_name"] == "Responsible"){
+        getAllUsers(function (datos){
+          $('#listUsers').empty();
+          for(var i = 0; i < datos.length; i++){
+            $('#listUsers').append('<li class="collection-item avatar waves-effect waves-light"><img src="img/hombre.png" class="circle"><span class="title"><b>' + datos[i].username + '</b></span></li>')
+          }
+        })
+        $('#settingsPage').hide();
+        $('#adminUsersPage').show();
+      }else {
+        M.toast({ html: 'No tienes permisos para este apartado' })
+      }
+    })
+    
+  }
 }
 
 function logOut() {
@@ -641,5 +662,19 @@ function insertProfile(datos) {
   $('#profileUserDiv').append('<b>Username: </b>' + datos.username);
   $('#inputAddress').empty();
   $('#inputAddress').val(datos.location.address);
+}
+
+function getAllUsers(manejaData){
+  $.ajax({
+    method: "GET",
+    headers: { "Authorization": token },
+    url: RUTA_LOCAL + "/allUsers",
+    dataType: "json"
+  }).done(function (data) {
+    manejaData(data);
+  }).fail(function (msg) {
+    console.log("ERROR LLAMADA AJAX" + JSON.stringify(msg));
+    M.toast({ html: 'Error en la conexión' })
+  });
 }
 
