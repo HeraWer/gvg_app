@@ -125,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       calendar.unselect()
     },
-    editable: true,
     eventLimit: true, // allow "more" link when too many events
     events: userEvents,
+    editable: true,
     eventRender: function (info) {
       $('.parent').attr('data-tooltip', info.event.extendedProps.description);
     }
