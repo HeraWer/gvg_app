@@ -125,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       calendar.unselect()
     },
-    editable: true,
     eventLimit: true, // allow "more" link when too many events
     events: userEvents,
+    editable: true,
     eventRender: function (info) {
       $('.parent').attr('data-tooltip', info.event.extendedProps.description);
     }
@@ -599,8 +599,10 @@ function getOffers() {
 function insertOffers(datos) {
   $('.jobsCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    let publisherId = JSON.stringify(datos[i].publisher);
+    var publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
+    //publisherId = publisherId.split("\\").join("");
     console.log("POP " + publisherId);
     let number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
     foto = "img/defaultProfile.png";
@@ -612,6 +614,7 @@ async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
     let publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
     console.log("POP " + publisherId);
     number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
