@@ -30,9 +30,8 @@ $(document).ready(function () {
   });
 
   $("#btnConfirm").click(function () {
-    saveImage(), function () {
-      if (!checkPasswordsEmpty) changePassword(); M.toast({ html: "Success !" });
-    }
+    saveImage(); 
+    changePassword(); 
   });
   $(document).on('click', '.liListener', function (e) {
     siONo(e);
@@ -142,7 +141,7 @@ function changePassword() {
   password1 = $('#inputPass').val();
   password2 = $('#inputPass2').val();
 
-  if (password1 == password2) {
+  if (password1 == password2 && password1!="" && password2!="") {
     $('#errorPasswords').hide();
     var userPass = '{"username":"' + currentUser + '","password":"' + password1 + '"}';
 
