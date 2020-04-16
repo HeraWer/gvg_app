@@ -324,8 +324,18 @@ function openPage(e) {
   else if (id == 'mapButton' && imInPage != 'mapFeedPage') {
     imInPage = "mapPage";
     console.log(imInPage);
+    var map;
+    function initMap() {
+      console.log("CREO MAPA");
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+      });
+    }
+    initMap();
     $('.pages').hide();
     $('#mapPage').show();
+    $('#map').show();
     closeMenu();
   }
   else if (id == 'jobsButton' && imInPage != 'jobsPage') {

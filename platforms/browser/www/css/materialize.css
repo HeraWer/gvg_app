@@ -17,6 +17,10 @@
 #profilePage {
   text-align: center !important;
 }
+#map{
+  width: 100%;
+  height: 100%;
+}
 #profileImageDiv img#profileImage{
   height: 50%;
   width: 50%;
