@@ -353,10 +353,7 @@ function openPage(e) {
     closeMenu();
     $('.fc_title').tooltip();
     $('.fc_title').addClass('tooltipped');
-    //$(document).ready(function () { $('fc-today-button').click() });
-    //sleep(5000).then(() => {
-      $('.fc-today-button').click()
-    //});
+    $('.fc-today-button').click()
   }
   else if (id == 'logOut') {
     console.log("logging out..");
@@ -381,7 +378,6 @@ function openPage(e) {
         M.toast({ html: 'No tienes permisos para este apartado' })
       }
     })
-    
   }
 }
 
@@ -592,8 +588,10 @@ function getOffers() {
 function insertOffers(datos) {
   $('.jobsCollection').empty();
   for (var i = 0; i < datos.length; i++) {
-    let publisherId = JSON.stringify(datos[i].publisher);
+    var publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
+    //publisherId = publisherId.split("\\").join("");
     console.log("POP " + publisherId);
     let number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
     foto = "img/defaultProfile.png";
@@ -605,6 +603,7 @@ async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
     let publisherId = JSON.stringify(datos[i].publisher);
+    publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
     console.log("POP " + publisherId);
     number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
