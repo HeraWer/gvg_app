@@ -407,6 +407,7 @@ function getNews() {
     url: RUTA_HEROKU + "/allEvents",
     dataType: "json",
   }).done(function (data) {
+    console.log("NEWSSS"+JSON.stringify(data));
     insertNews(data);
 
   }).fail(function (msg) {
@@ -477,7 +478,8 @@ function getUserOffersJunt() {
   });
 }
 
-function getUserById(d,flag) {
+function getUserById(d,flag,number,description,scheduleStartHour,scheduleEndHour,publisher) {
+  console.log("getUserByID "+JSON.stringify(d));
   let dades = JSON.parse('{"_id":"' + d + '"}');
   $.ajax({
     method: "POST",
@@ -486,10 +488,11 @@ function getUserById(d,flag) {
     dataType: "json",
     data: dades
   }).done(function (data) {
+    console.log(data);
     if(flag=="jobOffers"){
-      setPublisherFoto(data,"jobOffers");
+      setPublisherFoto(data,"jobOffers",number,description,scheduleStartHour,scheduleEndHour,publisher);
     }else if(flag=="newsFeed"){
-      setPublisherFoto(data,"newsFeed");
+      setPublisherFoto(data,"newsFeed",number,description,scheduleStartHour,scheduleEndHour,publisher);
     }
     console.log("XX" + JSON.stringify(data));
   }).fail(function (msg) {
@@ -592,27 +595,29 @@ function insertOffers(datos) {
     publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
     //publisherId = publisherId.split("\\").join("");
+    console.log("POPxd " + JSON.stringify(datos));
     console.log("POP " + publisherId);
-    let number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
+    number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
     foto = "img/defaultProfile.png";
-    getUserById(publisherId,"jobOffers");
+    getUserById(publisherId,"jobOffers",number,description,scheduleStartHour,scheduleEndHour,publisher);
   }
 }
 
 async function insertNews(datos) {
   $('.newsFeedCollection').empty();
   for (var i = 0; i < datos.length; i++) {
+    console.log("NEWSSS 2"+JSON.stringify(datos));
     let publisherId = JSON.stringify(datos[i].publisher);
     publisherId = publisherId.split("\\").join("");
     publisherId = publisherId.split('"').join("");
     console.log("POP " + publisherId);
     number = datos[i].number, description = datos[i].description, scheduleStartHour = datos[i].schedule[0].hour_start, scheduleEndHour = datos[i].schedule[0].hour_end, publisher = datos[i].publisher;
     foto = "img/defaultProfile.png";
-    getUserById(publisherId,"newsFeed");
+    getUserById(publisherId,"newsFeed",number,description,scheduleStartHour,scheduleEndHour,publisher);
   }
 }
 
-function setPublisherFoto(data, flag) {
+function setPublisherFoto(data, flag,number,description,scheduleStartHour,scheduleEndHour,publisher) {
   console.log("JAJAJA " + JSON.stringify(data));
   console.log("PUBLISH "+data.username);
   getPhoto(data.username, function (foto) {
