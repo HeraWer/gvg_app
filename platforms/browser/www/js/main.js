@@ -38,7 +38,7 @@ $(document).ready(function () {
 
     var data = JSON.parse(updateUserNotification);
     $.ajax({
-      url: RUTA_LOCAL + "/updateNotifications",
+      url: RUTA_HEROKU + "/updateNotifications",
       headers: { "Authorization": token },
       type: "POST",
       data: data,
@@ -252,7 +252,7 @@ function changePassword() {
 
   var data = JSON.parse(userPass);
   $.ajax({
-    url: RUTA_LOCAL + "/updatePassword",
+    url: RUTA_HEROKU + "/updatePassword",
     headers: { "Authorization": token },
     type: "POST",
     data: data,
@@ -482,7 +482,7 @@ function getUserById(d,flag) {
   $.ajax({
     method: "POST",
     headers: { "Authorization": token },
-    url: RUTA_LOCAL + "/getUserById",
+    url: RUTA_HEROKU + "/getUserById",
     dataType: "json",
     data: dades
   }).done(function (data) {
@@ -504,7 +504,7 @@ function getUser_Id(manejaData) {
   $.ajax({
     method: "POST",
     headers: { "Authorization": token },
-    url: RUTA_LOCAL + "/getUser_Id",
+    url: RUTA_HEROKU + "/getUser_Id",
     dataType: "json",
     data: dades
   }).done(function (data) {
@@ -521,7 +521,7 @@ function getUserJobs_Id(manejaData) {
   $.ajax({
     method: "POST",
     headers: { "Authorization": token },
-    url: RUTA_LOCAL + "/getUserJobs_Id",
+    url: RUTA_HEROKU + "/getUserJobs_Id",
     dataType: "json",
     data: dades
   }).done(function (data) {
@@ -538,7 +538,7 @@ function getUserEvents(userId, manejaData) {
     method: "POST",
     headers: { "Authorization": token },
     data: data,
-    url: RUTA_LOCAL + "/getUserEvents",
+    url: RUTA_HEROKU + "/getUserEvents",
     dataType: "json",
   }).done(function (data) {
     manejaData(data);
@@ -556,7 +556,7 @@ function getUserOffers(userId, manejaData) {
     method: "POST",
     headers: { "Authorization": token },
     data: data,
-    url: RUTA_LOCAL + "/getUserOffers",
+    url: RUTA_HEROKU + "/getUserOffers",
     dataType: "json",
   }).done(function (data) {
     manejaData(data);
@@ -667,7 +667,7 @@ function getAllUsers(manejaData){
   $.ajax({
     method: "GET",
     headers: { "Authorization": token },
-    url: RUTA_LOCAL + "/allUsers",
+    url: RUTA_HEROKU + "/allUsers",
     dataType: "json"
   }).done(function (data) {
     manejaData(data);
