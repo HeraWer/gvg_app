@@ -15,6 +15,9 @@
     },
     "cordova-plugin-file-transfer": {
       "PACKAGE_NAME": "com.govago.movil"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "com.govago.movil"
     }
   },
   "dependent_plugins": {}

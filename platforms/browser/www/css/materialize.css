@@ -2,6 +2,13 @@
   margin-left: 20% !important;
 
 }
+#settingsPage img {
+  width: 20% !important;
+  height: 20% !important;
+}
+#settingsPage .switch {
+  margin-left: 10px !important;
+}
 #errorPasswords {
   border: 2px solid rgb(255, 99, 71) !important;
   background-color: rgb(255, 99, 71, 0.5) !important;
@@ -10,9 +17,26 @@
 #profilePage {
   text-align: center !important;
 }
+body #mapId{
+  width: 411px;
+  height: 756.36px;
+}
 #profileImageDiv img#profileImage{
   height: 50%;
   width: 50%;
+  max-height: 145px;
+}
+@media (min-width: 300px) and (max-width: 425px) {
+  #profileImageDiv img#profileImage{
+    height: 40% !important;
+    width: 40% !important;
+  }
+}
+@media (min-width: 426px) and (max-width: 800px) {
+  #profileImageDiv img#profileImage{
+    height: 50% !important;
+    width: 50% !important;
+  }
 }
 .menuButton {
   background-color: #F3F3F3 !important;
@@ -66,7 +90,7 @@ span.title{
   margin-right: 0px !important;
 }
 .collection .collection-item {
-    padding: : 150px !important;
+    /*padding: : 150px !important;*/
     height: 100px !important; 
 }
 
@@ -3473,6 +3497,7 @@ input[type=range] + .thumb {
 .circle {
   border-radius: 50%;
 }
+
 
 .center-block {
   display: block;
