@@ -619,7 +619,7 @@ async function insertNews(datos) {
 
 function setPublisherFoto(data, flag,number,description,scheduleStartHour,scheduleEndHour,publisher) {
   console.log("JAJAJA " + JSON.stringify(data));
-  console.log("PUBLISH "+data.username);
+  console.log(data, flag,number,description,scheduleStartHour,scheduleEndHour,publisher);
   getPhoto(data.username, function (foto) {
     if (foto == null&&flag=="newsFeed") {
       console.log('predeterminando foto');
@@ -640,11 +640,7 @@ function setPublisherFoto(data, flag,number,description,scheduleStartHour,schedu
         $('.jobsCollection').append('<li class="collection-item avatar waves-effect waves-light"><img src='+foto+' class="circle"><span class="title">' + '#' + number + ' ' + description + ' de ' + scheduleStartHour + 'H a ' + scheduleEndHour + 'H </span></li>');
       }
     }
-    checkOfferState();
   });
-}
-function checkOfferState() {
-
 }
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));

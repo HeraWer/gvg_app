@@ -619,7 +619,7 @@ async function insertNews(datos) {
 
 function setPublisherFoto(data, flag,number,description,scheduleStartHour,scheduleEndHour,publisher) {
   console.log("JAJAJA " + JSON.stringify(data));
-  console.log("PUBLISH "+data.username);
+  console.log(data, flag,number,description,scheduleStartHour,scheduleEndHour,publisher);
   getPhoto(data.username, function (foto) {
     if (foto == null&&flag=="newsFeed") {
       console.log('predeterminando foto');
